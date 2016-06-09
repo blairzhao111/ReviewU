@@ -5,10 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 //require mongodb config and connection file.
-require('./app_server/models/db.js');
+require('./app_api/models/db.js');
 
-var routes = require('./app_server/routes/index');
-var users = require('./app_server/routes/users');
+var routes = require('./app_server/routes/index.js');
+var routesApi = require('./app_api/routes/index.js');
 
 var app = express();
 
@@ -24,8 +24,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//defining routing
 app.use('/', routes);
-app.use('/users', users);
+app.use('/api', routesApi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

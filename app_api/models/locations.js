@@ -16,7 +16,10 @@ var openingTimeSchema = new Schema({
 });
 
 var reviewSchema = new Schema({
-	author: String,
+	author: {
+		type: String,
+		required: true
+	},
 	rating: {
 		type: Number,
 		required: true,
@@ -36,7 +39,10 @@ var locationSchema = new Schema({
 		type: String,
 		required: true
 	},
-	address: String,
+	address: {
+		type: String,
+		required: true
+	},
 	rating: {
 		type: Number,
 		'default': 0,
@@ -46,7 +52,8 @@ var locationSchema = new Schema({
 	facilities: [String],
 	coords: {
 		type: [Number],
-		index: '2dsphere'
+		index: '2dsphere',
+		required: true
 	},
 	openingTimes: [openingTimeSchema],
 	reviews: [reviewSchema]
