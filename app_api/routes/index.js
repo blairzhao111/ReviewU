@@ -6,6 +6,7 @@ var express = require('express'),
 
 /**
 location api routing
+Basic url pattern: .../api/locations(/:locationid)
 **/
 
 //read a list of location data back 
@@ -26,6 +27,7 @@ router.delete('/locations/:locationid', ctrlLocation.deleteOneById);
 
 /**
 review api routing
+Basic url pattern: .../api/locations/:locationid/reviews(/:reviewid)
 **/
 
 //read a single instance of review by location id and review id
@@ -35,7 +37,10 @@ router.get('/locations/:locationid/reviews/:reviewid', ctrlReview.findOneById);
 router.post('locations/:locationid/reviews', ctrlReview.createOne);
 
 //update a single instance of review by locationid and reviewid
-router.put('location/:locationid/reviews/:reviewid', ctrlReview.updateOneById);
+router.put('locations/:locationid/reviews/:reviewid', ctrlReview.updateOneById);
+
+//delete a single instance of review by locationid and reviewid
+router.delete('locations/:locationid/reviews/:reviewid', ctrlReview.deleteOneById);
 
 
 module.exports = router;

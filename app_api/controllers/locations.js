@@ -1,10 +1,12 @@
-var DEFAULT_MAX_DISTANCE = 2000, //unit is in meter
-	DEFAULT_RETURN_NUMBER = 10,
+var DEFAULT_MAX_DISTANCE = 1, //unit is in kilometer, default is set to 1km/1000m
+	DEFAULT_RETURN_NUMBER = 10, 
     //require Location model 
 	Location = require('../models/locations.js'),
 	util = require('./util.js');
 
-//private section
+/**
+*	Private section
+**/
 var sendJSONResponse = util.sendJSONResponse;
 
 //helper object for calculation in geoNear method
@@ -36,8 +38,9 @@ var generateList = function(results){
 };
 
 
-//export section
-
+/**
+*	Export section
+**/
 //return a list of processed locations by specified lat, lng(both required), num and maxdis(optional).
 //url pattern: ...host:port/api/locations?lng=[]&lat=[](&maxdis=[]&num=[]) with get method.
 exports.listByDistance = function(req, res){
@@ -51,8 +54,8 @@ exports.listByDistance = function(req, res){
 		},
 		geoOptions = {
 			spherical: true,
-			//default maximum distance is 2km.
-			maxDistance: disConvert.kmToM(maxdis) || DEFAULT_MAX_DISTANCE,
+			//default maximum distance is 1km.
+			maxDistance: disConvert.kmToM(maxdis || DEFAULT_MAX_DISTANCE),
 			//default return number is 10
 			num: num || DEFAULT_RETURN_NUMBER
 		};
@@ -73,7 +76,7 @@ exports.listByDistance = function(req, res){
 };
 
 //read a location instance from db by specifiying its locationid through parameters
-//url pattern: ...host:port/api/locations/locationid with get method
+//url pattern: ...host:port/api/locations/:locationid with get method
 exports.findOneById = function(req, res){
 	if(req.params && req.params.locationid){
 		Location
@@ -132,10 +135,69 @@ exports.createOne = function(req, res){
 	});
 };
 
+//update an instance of location which is specified by locationid
 exports.updateOneById = function(req, res){
-	
+	var locationid = req.params.locationid,
+		body = req.body;
+	if(!locationid){
+		return sendJSONResponse(res, 404, {
+			message: 'locationid is required!'
+		});
+	}
+	Location
+		.findById(locationid)
+		.select('-reviews -rating')
+		.exec(function(err, location){
+			if(err){
+				return sendJSONResponse(res, 404, err);
+			}else if(!location){
+				return sendJSONResponse(res, 404, {
+					message: 'Required locationid not found!'
+				});
+			}
+			location.name = body.name || location.name;
+			location.address = body.address || location.address;
+			location.facilities = body.facilities?body.facilities.split(','):location.facilities;
+			location.coords = [parseFloat(body.lng)||location.coords[0], parseFloat(body.lat)||location.coords[1]];
+			location.openingTimes = [{
+				days: body.day_week || location.openingTimes[0].days,
+				closed: body.closed_week || location.openingTimes[0].closed,
+				opening: body.opening_week || location.openingTimes[0].opening,
+				closing: body.closing_week || location.openingTimes[0].closing
+			}, {
+				days: body.day_sat || location.openingTimes[1].days,
+				closed: body.closed_sat || location.openingTimes[1].closed,
+				opening: body.opening_sat || location.openingTimes[1].opening,
+				closing: body.closing_sat || location.openingTimes[1].closing				
+			}, {
+				days: body.day_sun || location.openingTimes[2].days,
+				closed: body.closed_sun || location.openingTimes[2].closed,
+				opening: body.opening_sun || location.openingTimes[2].opening,
+				closing: body.closing_sun || location.openingTimes[2].closing
+			}];
+			location.save(function(err, result){
+				if(err){
+					return sendJSONResponse(res, 404, err);
+				}
+				sendJSONResponse(res, 200, result);
+			})
+		});
 };
 
+//delete an instance of location which is specified by locationid
 exports.deleteOneById = function(req, res){
-
+	var locationid = req.params.locationid;
+	if(!locationid){
+		return sendJSONResponse(res, 404, {
+			message: 'locationid is required!'
+		});
+	}
+	Location
+		.findByIdAndRemove(locationid)
+		.exec(function(err, location){
+			if(err){
+				return sendJSONResponse(res, 404, err);
+			}
+			sendJSONResponse(res, 204, null);
+		});
 };

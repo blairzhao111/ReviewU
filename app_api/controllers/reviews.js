@@ -1,7 +1,10 @@
 var Location = require('../models/locations.js'),
 	util = require('./util.js');
 
-//private section
+/**
+*	Private section
+**/
+//get sendJSONResponse function from util module
 var sendJSONResponse = util.sendJSONResponse;
 
 //update location's rating when a new review is added or an existing review is updated.
@@ -41,7 +44,9 @@ var addReview = function(req, res, location){
 	});
 };
 
-//export section
+/**
+*	Export section
+**/
 //find an instance of review by a locationid and a reviewid in db.
 exports.findOneById = function(req, res){
 	if(req.params && req.params.locationid && req.params.reviewid){
@@ -115,7 +120,7 @@ exports.createOne = function(req, res){
 
 //update a review subdocument 
 exports.updateOneById = function(req, res){
-	if( !req.params.locationid || !req.params.reviewid){
+	if(!req.params || !req.params.locationid || !req.params.reviewid){
 		return sendJSONResponse(res, 404, {
 			message: 'Both locationid and reviewid are required!'
 		});
@@ -154,6 +159,49 @@ exports.updateOneById = function(req, res){
 			}else{
 				sendJSONResponse(res, 404, {
 					message: 'No review to update!'
+				});
+			}
+		});
+};
+
+//delete a review subdocument 
+exports.deleteOneById = function(req, res){
+	var locationid = req.params.locationid,
+		reviewid = req.params.reviewid;
+	if(!locationid || !reviewid){
+		return sendJSONResponse(res, 404, {
+			message: 'Both locationid and reviewid are required!'
+		});
+	}
+	Location
+		.findById(locationid)
+		.select('reviews')
+		.exec(function(err, location){
+			if(err){
+				return sendJSONResponse(res, 404, err);
+			}else if(!location){
+				return sendJSONResponse(res, 404, {
+					message: 'Required locationid not found!'
+				});
+			}
+			if(location.reviews && location.reviews.length > 0){
+				if(location.reviews.id(reviewid)){
+					location.reviews.id(reviewid).remove();
+					location.save(function(err){
+						if(err){
+							return sendJSONResponse(res, 404, err);
+						}
+						updateLocationRating(location);
+						sendJSONResponse(res, 204, null);
+					});
+				}else{
+					sendJSONResponse(res, 404, {
+						message: 'Required reviewid not found!'
+					});
+				}
+			}else{
+				sendJSONResponse(res, 404, {
+					message: 'No review to delete!'
 				});
 			}
 		});
