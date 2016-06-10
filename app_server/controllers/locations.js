@@ -4,7 +4,7 @@ var request = require('request'),
     };
 
 if(process.env.NODE_ENV === 'production'){
-  apiOptions.server = '';
+  apiOptions.server = 'https://shrouded-gorge-10239.herokuapp.com';
 }
 
 //process the distance data in 
