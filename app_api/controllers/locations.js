@@ -60,7 +60,7 @@ exports.listByDistance = function(req, res){
 			num: num || DEFAULT_RETURN_NUMBER
 		};
 
-	if(!lng || !lat){
+	if((!lng&&lng!==0)||(!lat&&lat!==0)){
 		return sendJSONResponse(res, 404, {
 			message: 'lng and lat are required!'
 		});
