@@ -98,9 +98,9 @@ module.exports.homelist = function (req, res) {
           method: 'GET',
           json: {},
           qs: {
-            lng: process.env.NODE_ENV==='development'?'-78.8148184':'-0.9692599',
-            lat: process.env.NODE_ENV==='development'?'43.0056247':'51.378091',
-            maxdis: req.query.maxdis || (process.env.NODE_ENV==='development'?null:'10'),
+            lng: process.env.NODE_ENV==='production'?'-78.8148184':'-0.9692599',
+            lat: process.env.NODE_ENV==='production'?'43.0056247':'51.378091',
+            maxdis: req.query.maxdis || (process.env.NODE_ENV==='production'?null:'10'),
             num: req.query.num || null
           }
       };  
