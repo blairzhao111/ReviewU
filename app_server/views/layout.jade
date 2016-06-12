@@ -5,10 +5,10 @@ html(lang="en")
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(name="author", content="Junwei Zhao")
     title= title
-    link(rel='stylesheet', href='/bootstrap/css/amelia.bootstrap.css')
+    link(rel='stylesheet', href='/bootstrap/css/journal.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    .navbar.navbar-default.navbar-fixed-top(role='navigation')
+    nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
       .container
         .navbar-header
           button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
@@ -27,7 +27,8 @@ html(lang="en")
     .container
       block content
 
-      footer
+    nav.navbar.navbar-default.navbar-fixed-bottom(role='footer')
+      .container#footer
         .row
           .col-xs-12
             small &copy; Junwei Zhao 2016

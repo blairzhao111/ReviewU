@@ -9,6 +9,7 @@ require('./app_api/models/db.js');
 
 var routes = require('./app_server/routes/index.js');
 var routesApi = require('./app_api/routes/index.js');
+var util = require('./app_server/util/util.js');
 
 var app = express();
 
@@ -35,28 +36,22 @@ app.use(function(req, res, next) {
   next(err);
 });
 
+
 // error handlers
 
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
+    util.renderErrorPage(req, res, err.status || 500);
+    console.error(err);
   });
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+  util.renderErrorPage(req, res, err.status || 500);
 });
 
 module.exports = app;

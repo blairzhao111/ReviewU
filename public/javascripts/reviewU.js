@@ -1,8 +1,14 @@
 
 (function($){
 	$(document).ready(function(){
-		var $area = $('div.area');
+		var $area = $('div.area'),
+			$searchMore = $('#searchMore'),
+			$searchPanel = $('#searchPanel'),
+			borderDefault = $area.css('border');
+
 		$('p a.detail').hide();
+		$searchPanel.hide();
+
 		$area
 			.on('mouseenter', function(){
 				$(this)
@@ -16,11 +22,16 @@
 			.on('mouseleave', function(){
 				$(this)
 					.css({
-						'border': 'none',
+						'border': borderDefault,
 						'font-size': '100%'
 					})
 					.find('a.detail')
 						.fadeToggle(300);
-			});		
+			});
+
+		$searchMore
+			.on('click', function(){
+				$searchPanel.slideToggle(300);
+			});	
 	});
 })(jQuery);

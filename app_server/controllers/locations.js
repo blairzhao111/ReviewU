@@ -175,5 +175,32 @@ module.exports.review = function (req, res) {
 
 /* Add review to a specific location and return back to that location's detail page*/
 module.exports.addReview = function(req, res){
+    var body = req.body,
+        locationid = req.params.locationid,
+        path = '/api/locations/' + locationid + '/reviews',
+        postData = {
+          author: body.name,
+          rating: body.rating,
+          reviewText: body.review
+        },
+        requestOptions = {
+          url: serverUrl + path,
+          method: 'POST',
+          json: postData
+        };
 
+        console.log(requestOptions);
+
+    request(requestOptions, function(err, response, body){
+      if(err){
+        console.error(err);
+      }else{
+        if(response.statusCode === 201){
+          res.status(304);
+          res.redirect('/location/' + locationid);
+        }else{
+          renderErrorPage(req, res, response.statusCode);
+        }
+      }
+    });
 };

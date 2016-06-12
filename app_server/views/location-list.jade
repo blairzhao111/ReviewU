@@ -27,4 +27,27 @@ block content
               a.btn.btn-info.btn-sm.pull-right.detail(href="/location/#{location._id}") Check details
 
     .col-xs-12.col-md-4
+      .panel.panel-info
+        .panel-heading
+          h2.panel-title Search Filter
+        .panel-body
+          form.form-horizontal(action="", method="get", role="form")
+            .row
+              .col-xs-12
+                .input-group.input-group-sm
+                  input.form-control(type='text' name='searchContent' placeholder='Which location...' required)
+                  span.input-group-btn
+                    button.btn.btn-default(type='submit') Search
+                    button.btn.btn-default#searchMore(type='button')
+                      span.caret      
+            .row#searchPanel
+              br
+              .col-xs-12
+                .panel.panel-default#searchPanel
+                  .panel-body
+                    .form-group
+                      label.col-xs-2.control-label Rating
+                      .col-xs-10
+                        input.form-control(type="text")
+
       p.lead= sidebar

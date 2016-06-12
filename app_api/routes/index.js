@@ -34,13 +34,13 @@ Basic url pattern: .../api/locations/:locationid/reviews(/:reviewid)
 router.get('/locations/:locationid/reviews/:reviewid', ctrlReview.findOneById);
 
 //create a new instance of review and attach it to main document when its location is valid
-router.post('locations/:locationid/reviews', ctrlReview.createOne);
+router.post('/locations/:locationid/reviews', ctrlReview.createOne);
 
 //update a single instance of review by locationid and reviewid
-router.put('locations/:locationid/reviews/:reviewid', ctrlReview.updateOneById);
+router.put('/locations/:locationid/reviews/:reviewid', ctrlReview.updateOneById);
 
 //delete a single instance of review by locationid and reviewid
-router.delete('locations/:locationid/reviews/:reviewid', ctrlReview.deleteOneById);
+router.delete('/locations/:locationid/reviews/:reviewid', ctrlReview.deleteOneById);
 
 
 module.exports = router;
