@@ -13,7 +13,7 @@ block content
       .error= message
       .row.list-group
         each location in locations
-          .col-xs-12.list-group-item
+          .col-xs-12.list-group-item.area
             h4
               a(href="/location/#{location._id}")= location.name
               small &nbsp;
@@ -24,6 +24,7 @@ block content
               each facility in location.facilities
                 span.label.label-warning= facility
                 | &nbsp;
+              a.btn.btn-info.btn-sm.pull-right.detail(href="/location/#{location._id}") Check details
 
     .col-xs-12.col-md-4
       p.lead= sidebar

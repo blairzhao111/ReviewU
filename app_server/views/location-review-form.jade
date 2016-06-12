@@ -6,15 +6,15 @@ block content
       h1= pageHeader.title
   .row
     .col-xs-12.col-md-6
-      form.form-horizontal(action="/location", method="get", role="form")
+      form.form-horizontal(action="/location/#{locationid}/reviews/new", method="post", role="form")
         .form-group
           label.col-xs-10.col-sm-2.control-label(for="name") Name
           .col-xs-12.col-sm-10
-            input#name.form-control(name="name")
+            input#name.form-control(name="name" required)
         .form-group
           label.col-xs-10.col-sm-2.control-label(for="rating") Rating
           .col-xs-12.col-sm-10
-            select#rating.form-control.input-sm(name="rating")
+            select#rating.form-control.input-sm(name="rating" required)
               option 5
               option 4
               option 3

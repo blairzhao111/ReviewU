@@ -35,6 +35,35 @@ var formatTimestamp = function(reviews){
   return reviews;
 };
 
+//get a location object from db through Restful API and execute the callback function.
+var getLocation = function(req, res, callback){
+  var locationid = req.params.locationid,
+      path = '/api/locations/' + locationid,
+      requestOptions = {
+        url: serverUrl + path,
+        method: 'GET',
+        json: {},
+      };
+
+  request(requestOptions, function(err, response, body){
+      if(err){
+        console.error(err);
+      }else{
+        var location;
+        location = JSON.parse(body);
+        if(response.statusCode === 200){
+          location.coords = {
+            lng: location.coords[0],
+            lat: location.coords[1]
+          };
+          location.reviews = formatTimestamp(location.reviews);
+          callback(req, res, location);
+        }else{
+          renderErrorPage(req, res, response.statusCode);
+        }
+      }
+  });   
+};
 
 /**
 *  Render view function section
@@ -72,6 +101,7 @@ var renderDetailPage = function(req, res, location){
       callToAction: 'If you\'ve been and you like it - or if you don\'t - please leave areview to help other people just like you.'
     },
     location: {
+      _id: location._id,
       name: location.name,
       address: location.address,
       rating: location.rating,
@@ -79,8 +109,18 @@ var renderDetailPage = function(req, res, location){
       coords: location.coords,
       openingTimes: location.openingTimes,
       reviews: location.reviews
-    }
+    },
   });
+};
+
+//function for rendering the review form page for a specific location.
+var renderReviewFormPage = function(req, res, location){
+  var name = location.name;
+  res.render('location-review-form', {
+    title: 'Review ' + name  + ' on ReviewU',
+    pageHeader: { title: 'Review ' + name },
+    locationid: location._id
+  }); 
 };
 
 //function for rendering any error page
@@ -121,38 +161,19 @@ module.exports.homelist = function (req, res) {
 
 /* Get 'LocationInfo' Page*/
 module.exports.locationInfo = function (req, res) {
-  var locationid = req.params.locationid,
-      path = '/api/locations/' + locationid,
-      requestOptions = {
-        url: serverUrl + path,
-        method: 'GET',
-        json: {},
-      };
-
-  request(requestOptions, function(err, response, body){
-      if(err){
-        console.error(err);
-      }else{
-        var location;
-        location = JSON.parse(body);
-        if(response.statusCode === 200){
-          location.coords = {
-            lng: location.coords[0],
-            lat: location.coords[1]
-          };
-          location.reviews = formatTimestamp(location.reviews);
-          renderDetailPage(req, res, location);
-        }else{
-          renderErrorPage(req, res, response.statusCode);
-        }
-      }
-  });  
+  getLocation(req, res, function(req, res, location){
+    renderDetailPage(req, res, location);
+  });
 };
 
 /* Get 'Add Review' Page*/
-module.exports.addReview = function (req, res) {
-  res.render('location-review-form', {
-    title: 'Review Starcups on Loc8r',
-    pageHeader: { title: 'Review Starcups' } 
+module.exports.review = function (req, res) {
+  getLocation(req, res, function(req, res, location){
+    renderReviewFormPage(req, res, location);
   });
+};
+
+/* Add review to a specific location and return back to that location's detail page*/
+module.exports.addReview = function(req, res){
+
 };
