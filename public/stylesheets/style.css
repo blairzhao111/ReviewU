@@ -1,6 +1,6 @@
 body {
 	padding-top: 85px;
-	padding-bottom: 80px;
+	padding-bottom: 75px;
 }
 
 .jumbotron {
@@ -22,4 +22,3 @@ body {
 .reviewAuthor {margin: 0 5px;}
 
 .reviewTimestamp {color: #ccc;}
-
