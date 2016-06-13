@@ -11,8 +11,12 @@ block content
         h1= pageHeader.title
         p.text-info 
           em &nbsp;#{pageHeader.strapline}
-        p
-          a.btn.btn-primary.btn-lg(href="#") Join Us Now!
+        if user
+          p
+            a.btn.btn-primary.btn-lg(href="#") Add New Place!
+        else
+          p
+            a.btn.btn-primary.btn-lg(href="#") Join Us Now!            
   .row
     .col-xs-12.col-md-8
       .error= message
