@@ -9,12 +9,17 @@
 		$('p a.detail').hide();
 		$searchPanel.hide();
 
+		$('button.close').on('click', function(){
+			$('#banner').slideUp(1000);
+			$(this).hide();
+		});
+
 		$area
 			.on('mouseenter', function(){
 				$(this)
 					.css({
-						'border': '4px solid #CCC',
-						'font-size': '130%'
+						'border': '5px solid #ff0066',
+						'font-size': '135%'
 					})
 					.find('a.detail')
 						.fadeToggle(300);
@@ -33,5 +38,6 @@
 			.on('click', function(){
 				$searchPanel.slideToggle(300);
 			});	
+
 	});
 })(jQuery);

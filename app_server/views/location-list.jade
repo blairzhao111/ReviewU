@@ -3,11 +3,16 @@ extends layout
 include _includes/sharedHTMLFunction.jade
 
 block content
-  #banner.page-header
+  button.close.pull-right(type="button")
+    span &times 
+  #banner.jumbotron
     .row
       .col-xs-12
         h1= pageHeader.title
-          small &nbsp;#{pageHeader.strapline}
+        p.text-info 
+          em &nbsp;#{pageHeader.strapline}
+        p
+          a.btn.btn-primary.btn-lg(href="#") Join Us Now!
   .row
     .col-xs-12.col-md-8
       .error= message
