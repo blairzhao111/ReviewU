@@ -115,11 +115,13 @@ var renderDetailPage = function(req, res, location){
 
 //function for rendering the review form page for a specific location.
 var renderReviewFormPage = function(req, res, location){
-  var name = location.name;
+  var name = location.name,
+      message = req.query.err?'Please fill in all required fields and try again!':null;
   res.render('location-review-form', {
     title: 'Review ' + name  + ' on ReviewU',
     pageHeader: { title: 'Review ' + name },
-    locationid: location._id
+    locationid: location._id,
+    message: message
   }); 
 };
 
@@ -189,16 +191,26 @@ module.exports.addReview = function(req, res){
           json: postData
         };
 
-        console.log(requestOptions);
+    //do simple not undefined value in application level
+    if(!postData.author || !postData.rating || !postData.reviewText){
+      res.status(304);
+      return res.redirect('/location/' + locationid + '/review/new?err=true');
+    }
 
+    //make api call to review-createOne
     request(requestOptions, function(err, response, body){
       if(err){
         console.error(err);
       }else{
+        body = JSON.parse(body);
         if(response.statusCode === 201){
           res.status(304);
           res.redirect('/location/' + locationid);
+        }else if(response.statusCode === 400 && body.name && body.name === "ValidationError"){
+          res.status(304);
+          res.redirect('/location/' + locationid + '/review/new?err=true');
         }else{
+          console.error(body);
           renderErrorPage(req, res, response.statusCode);
         }
       }
