@@ -24,7 +24,11 @@ body {
 
 .reviewTimestamp {color: #ccc;}
 
-.hline{
+.hline {
 	border-bottom: 2px solid #000000;
 	margin-bottom: 25px;
+}
+
+#footer {
+	font-size: 90%;
 }

@@ -12,19 +12,20 @@ block content
         .form-group
           label.col-xs-10.col-sm-2.control-label(for="name") Name
           .col-xs-12.col-sm-10
-            input#name.form-control(name="name" autofocus)
+            input#name.form-control(name="name" placeholder="Name" autofocus required)
         .form-group
           label.col-xs-10.col-sm-2.control-label(for="rating") Rating
           .col-xs-12.col-sm-10
             select#rating.form-control.input-sm(name="rating" required)
-              option 5
-              option 4
-              option 3
-              option 2
-              option 1
+              option(value='' disabled selected hidden) Choose your rating...
+              option(value='5') 5
+              option(value='4') 4
+              option(value='3') 3
+              option(value='2') 2
+              option(value='1') 1
         .form-group
           label.col-xs-10.col-sm-2.control-label(for="review") Review
           .col-xs-12.col-sm-10
-            textarea#reviewText.form-control(name="review" rows="8")
+            textarea#reviewText.form-control(name="review" rows="8" placeholder="Write down your review here...")
         button.btn.btn-primary.pull-right(type="submit") Add my review
     .col-xs-12.col-md-4 
