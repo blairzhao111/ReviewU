@@ -38,6 +38,9 @@ var reviewSchema = new Schema({
 
 //define main document schema
 var locationSchema = new Schema({
+	category: {
+		type: String
+	},
 	name: {
 		type: String,
 		required: true

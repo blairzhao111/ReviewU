@@ -65,6 +65,59 @@ var getLocation = function(req, res, callback){
   });   
 };
 
+//categorize return locations into different lists by their categories
+var categoryList = function(locations){
+  var result = {},
+      rest = [],
+      bar = [],
+      shop = [],
+      service = [],
+      others = []; 
+
+  if(!locations.length){return result;}
+
+  locations.forEach(function(location){
+    switch(location.category){
+      case 'restaurant':
+        rest.push(location);
+        break;
+      case 'bar':
+        bar.push(location);
+        break;
+      case 'cafe':
+        bar.push(location);
+        break;
+      case 'shopping':
+        shop.push(location);
+        break;
+      case 'service':
+        service.push(location);
+        break;
+      case 'others':
+        others.push(location);
+        break;
+      default:
+        others.push(location);
+        break;
+    }
+  });
+
+  result.restaurant = rest.length>0?rest:null;
+  result.bar = bar.length>0?bar:null;
+  result.shopping = shop.length>0?shop:null;
+  result.service = service.length>0?service:null;
+  result.others = others.length>0?others:null;
+
+  return result;
+};
+
+//format category, capitalize first character
+var formatCategory = function(category){
+  if(!category){return category;}
+  console.log(category.charAt(0).toUpperCase());
+  return category.charAt(0).toUpperCase() + category.substr(1);
+};
+
 /**
 *  Render view function section
 **/
@@ -74,11 +127,8 @@ var renderListPage = function(req, res, locations){
   if(!(locations instanceof Array)){
     message = 'API lookup error';
     locations = [];
-  }else{
-    if(!locations.length){
-      message = 'No places found nearby!'
-    }
   }
+  locations = categoryList(locations);
   res.render('location-list', { 
     title: 'ReviewU - Share your reviews with us and find others',
     pageHeader: {
@@ -104,6 +154,7 @@ var renderDetailPage = function(req, res, location){
       _id: location._id,
       name: location.name,
       address: location.address,
+      category: location.category,
       rating: location.rating,
       facilities: location.facilities,
       coords: location.coords,
@@ -164,6 +215,9 @@ module.exports.homelist = function (req, res) {
 /* Get 'LocationInfo' Page*/
 module.exports.locationInfo = function (req, res) {
   getLocation(req, res, function(req, res, location){
+    if(location.category){
+      location.category = formatCategory(location.category);
+    }
     renderDetailPage(req, res, location);
   });
 };

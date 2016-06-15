@@ -33,8 +33,8 @@ block content
       hr
       .error= message
       #restaurant-list.row.list-group
-        if locations
-          each location in locations
+        if locations.restaurant
+          each location in locations.restaurant
             .col-xs-12.list-group-item.area
               h4
                 a(href="/location/#{location._id}")= location.name

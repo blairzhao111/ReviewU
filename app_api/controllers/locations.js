@@ -27,6 +27,7 @@ var generateList = function(results){
 	results.forEach(function(result){
 		locations.push({
 			distance: result.dis,
+			category: result.obj.category,
 			name: result.obj.name,
 			address: result.obj.address,
 			rating: result.obj.rating,
@@ -183,6 +184,27 @@ exports.updateOneById = function(req, res){
 			})
 		});
 };
+
+/*exports.updateOneTypeBYId = function(req, res){
+	var locationid = req.params.locationid,
+		category = req.query.type;
+
+	Location
+		.findById(locationid)
+		.exec(function(err, location){
+			if(err || !location){
+				throw new Error(err || "Not found");
+			}
+			location.category = category;
+			location.save(function(err, result){
+				if(err){
+					return sendJSONResponse(res, 404, err);
+				}else{
+					sendJSONResponse(res, 200, result);
+				}
+			});
+		});
+};*/
 
 //delete an instance of location which is specified by locationid
 exports.deleteOneById = function(req, res){

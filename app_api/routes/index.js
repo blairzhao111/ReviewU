@@ -24,6 +24,7 @@ router.put('/locations/:locationid', ctrlLocation.updateOneById);
 //delete a single instance of location by id
 router.delete('/locations/:locationid', ctrlLocation.deleteOneById);
 
+//router.get('/locations/:locationid/addType', ctrlLocation.updateOneTypeBYId);
 
 /**
 review api routing
