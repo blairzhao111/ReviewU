@@ -19,6 +19,16 @@ block content
             a.btn.btn-primary.btn-lg(href="#") Join Us Now!            
   .row
     .col-xs-12.col-md-8
+      ul.nav.nav-tabs.nav-justified
+        li.active(role="presentation")
+          a(href="#") Restaurants
+        li(role="presentation")
+          a(href="#") Bar&Cafe
+        li(role="presentation")
+          a(href="#") Shopping
+        li(role="presentation")
+          a(href="#") Services
+      hr
       .error= message
       .row.list-group
         each location in locations
