@@ -112,11 +112,8 @@ var categoryList = function(locations){
 };
 
 //format category, capitalize first character
-var formatCategory = function(category){
-  if(!category){return category;}
-  console.log(category.charAt(0).toUpperCase());
-  return category.charAt(0).toUpperCase() + category.substr(1);
-};
+var formatCategory = util.formatCategory;
+
 
 /**
 *  Render view function section

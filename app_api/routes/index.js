@@ -15,6 +15,9 @@ router.get('/locations', ctrlLocation.listByDistance);
 //read a single instance of location by id
 router.get('/locations/:locationid', ctrlLocation.findOneById);
 
+//read all instances of location by name
+router.get('/locations/name/:locationName', ctrlLocation.findByName);
+
 //create a new instance of location
 router.post('/locations', ctrlLocation.createOne);
 

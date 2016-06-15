@@ -4,7 +4,7 @@
   .panel-body
     .row
       .col-xs-12
-        form.input-group.input-group-sm
+        form.input-group.input-group-sm(action="/search" method="get" role="form")
           input.form-control(type='text' name='searchContent' placeholder='Which location...' required)
           span.input-group-btn
             button.btn.btn-primary(type='submit') Search
@@ -17,7 +17,7 @@
           .panel-body
             p.text-center 
               strong Advance Search
-            form.form-horizontal(action="#" method="get" role="form")
+            form.form-horizontal(action="/search/adv" method="get" role="form")
               .form-group.form-group-sm
                 label.col-xs-2.control-label Name
                 .col-xs-10

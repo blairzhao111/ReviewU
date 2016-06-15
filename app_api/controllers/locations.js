@@ -99,6 +99,26 @@ exports.findOneById = function(req, res){
 	}
 };
 
+exports.findByName = function(req, res){
+	if(req.params && req.params.locationName){
+		var data = req.params.locationName +'+';
+		Location
+			.find({
+				name: new RegExp(data, 'i')
+			})
+			.exec(function(err, locations){
+				if(err){
+					return sendJSONResponse(res, 404, err);
+				}
+				sendJSONResponse(res, 200, locations);
+			});
+	}else{
+		sendJSONResponse(res, 404, {
+			message: 'No locationName is specified in request!'
+		});
+	}
+};
+
 
 //create a new instance of location document in mongodb.
 exports.createOne = function(req, res){

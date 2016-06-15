@@ -14,3 +14,10 @@ exports.renderErrorPage = function(req, res, statusCode){
     content: content
   });
 };
+
+//format category, capitalize first character
+exports.formatCategory = function(category){
+  if(!category){return category;}
+  console.log(category.charAt(0).toUpperCase());
+  return category.charAt(0).toUpperCase() + category.substr(1);
+};
