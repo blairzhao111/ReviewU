@@ -5,9 +5,82 @@
 			$searchMore = $('#searchMore'),
 			$searchPanel = $('#searchPanel'),
 			$footer = $('#footer'),
-			$searchSpan = $searchMore.children('span');
+			$searchSpan = $searchMore.children('span'),
+			$list = $('div#list'),
 			borderDefault = $area.css('border');
 
+		if($list.length > 0){
+			var $tab = $list.find('ul#tab'),
+				$restList = $list.find('div#restaurant-list'),
+				$barList = $list.find('div#barcafe-list').hide(),
+				$shopList = $list.find('div#shopping-list').hide(),
+				$serviceList = $list.find('div#service-list').hide(),
+				$othersList = $list.find('div#others-list').hide(),
+				$restTab = $tab.find('a#rest-tab'),
+				$barTab = $tab.find('a#bar-tab'),
+				$shopTab = $tab.find('a#shop-tab'),
+				$serviceTab = $tab.find('a#service-tab'),
+				$othersTab = $tab.find('a#others-tab'),
+				$currentTab = $restTab,
+				$currentList = $restList;
+
+			$restTab.on('click', function(event){
+				event.preventDefault();
+				if($currentTab === $restTab){return;}
+				$currentList.hide();
+				$currentTab.parent('li').removeClass('active');
+				$currentTab = $restTab;
+				$currentList = $restList;
+				$currentList.fadeIn(800);
+				$currentTab.parent('li').addClass('active');
+			});
+
+			$barTab.on('click', function(event){
+				event.preventDefault();
+				if($currentTab === $barTab){return;}
+				$currentList.hide();
+				$currentTab.parent('li').removeClass('active');
+				$currentTab = $barTab;
+				$currentList = $barList;
+				$currentList.fadeIn(800);
+				$currentTab.parent('li').addClass('active');
+			});
+
+			$shopTab.on('click', function(event){
+				event.preventDefault();
+				if($currentTab === $shopTab){return;}
+				$currentList.hide();
+				$currentTab.parent('li').removeClass('active');
+				$currentTab = $shopTab;
+				$currentList = $shopList;
+				$currentList.fadeIn(800);
+				$currentTab.parent('li').addClass('active');				
+			});
+
+			$serviceTab.on('click', function(event){
+				event.preventDefault();
+				if($currentTab === $serviceTab){return;}
+				$currentList.hide();
+				$currentTab.parent('li').removeClass('active');
+				$currentTab = $serviceTab;
+				$currentList = $serviceList;
+				$currentList.fadeIn(800);
+				$currentTab.parent('li').addClass('active');				
+			});
+
+			$othersTab.on('click', function(event){
+				event.preventDefault();
+				if($currentTab === $othersTab){return;}
+				$currentList.hide();
+				$currentTab.parent('li').removeClass('active');
+				$currentTab = $othersTab;
+				$currentList = $othersList;
+				$currentList.fadeIn(800);
+				$currentTab.parent('li').addClass('active');				
+			});
+		}
+
+		//pages starting state
 		$('p a.detail').hide();
 		$searchPanel.hide();
 
@@ -42,6 +115,7 @@
 						.fadeToggle(100);
 			});
 
+		//slideToggle search panel
 		$searchMore
 			.on('click', function(){
 				$searchPanel.slideToggle(300);

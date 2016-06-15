@@ -54,6 +54,12 @@
               .form-group.form-group-sm
                 label.col-xs-2.control-label Type
                 .col-xs-10
-                  input.form-control(type="text" name="type" placeholder="Location type...")
+                  select.form-control(name="type")
+                    option(value='' disabled selected hidden) Choose type...
+                    option(value='Restaurant') Restaurant
+                    option(value='Bar&Cafe') Bar&Cafe
+                    option(value='Shopping') Shopping
+                    option(value='Service') Service
+                    option(value='Others') Others
               button.btn.btn-default.btn-sm.pull-left(type="reset") Clear All
               button.btn.btn-primary.btn-sm.pull-right(type="submit") Find My places!

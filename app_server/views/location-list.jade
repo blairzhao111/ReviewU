@@ -17,33 +17,106 @@ block content
         else
           p
             a.btn.btn-primary.btn-lg(href="#") Join Us Now!            
-  .row
+  #list.row
     .col-xs-12.col-md-8
-      ul.nav.nav-tabs.nav-justified
+      ul#tab.nav.nav-tabs.nav-justified
         li.active(role="presentation")
-          a(href="#") Restaurants
+          a#rest-tab(href="") Restaurants
         li(role="presentation")
-          a(href="#") Bar&Cafe
+          a#bar-tab(href="") Bar&Cafe
         li(role="presentation")
-          a(href="#") Shopping
+          a#shop-tab(href="") Shopping
         li(role="presentation")
-          a(href="#") Services
+          a#service-tab(href="") Services
+        li(role="presentation")
+          a#others-tab(href="") Others        
       hr
       .error= message
-      .row.list-group
-        each location in locations
-          .col-xs-12.list-group-item.area
-            h4
-              a(href="/location/#{location._id}")= location.name
-              small &nbsp;
-                +outputRating(location.rating)
-              span.badge.pull-right.badge-default= location.distance
-            p.address= location.address
-            p
-              each facility in location.facilities
-                span.label.label-warning= facility
-                | &nbsp;
-              a.btn.btn-info.btn-sm.pull-right.detail(href="/location/#{location._id}") Check details
+      #restaurant-list.row.list-group
+        if locations
+          each location in locations
+            .col-xs-12.list-group-item.area
+              h4
+                a(href="/location/#{location._id}")= location.name
+                small &nbsp;
+                  +outputRating(location.rating)
+                span.badge.pull-right.badge-default= location.distance
+              p.address= location.address
+              p
+                each facility in location.facilities
+                  span.label.label-warning= facility
+                  | &nbsp;
+                a.btn.btn-info.btn-sm.pull-right.detail(href="/location/#{location._id}") Check details          
+        else
+          h3.text-center Sorry, but no result has been found!
+      #barcafe-list.row.list-group
+        if locations.bar
+          each location in locations.bar
+            .col-xs-12.list-group-item.area
+              h4
+                a(href="/location/#{location._id}")= location.name
+                small &nbsp;
+                  +outputRating(location.rating)
+                span.badge.pull-right.badge-default= location.distance
+              p.address= location.address
+              p
+                each facility in location.facilities
+                  span.label.label-warning= facility
+                  | &nbsp;
+                a.btn.btn-info.btn-sm.pull-right.detail(href="/location/#{location._id}") Check details         
+        else
+          h3.text-center Sorry, but no result has been found!
+      #shopping-list.row.list-group
+        if locations.shopping
+          each location in locations.shopping
+            .col-xs-12.list-group-item.area
+              h4
+                a(href="/location/#{location._id}")= location.name
+                small &nbsp;
+                  +outputRating(location.rating)
+                span.badge.pull-right.badge-default= location.distance
+              p.address= location.address
+              p
+                each facility in location.facilities
+                  span.label.label-warning= facility
+                  | &nbsp;
+                a.btn.btn-info.btn-sm.pull-right.detail(href="/location/#{location._id}") Check details         
+        else
+          h3.text-center Sorry, but no result has been found!
+      #service-list.row.list-group
+        if locations.service
+          each location in locations.service
+            .col-xs-12.list-group-item.area
+              h4
+                a(href="/location/#{location._id}")= location.name
+                small &nbsp;
+                  +outputRating(location.rating)
+                span.badge.pull-right.badge-default= location.distance
+              p.address= location.address
+              p
+                each facility in location.facilities
+                  span.label.label-warning= facility
+                  | &nbsp;
+                a.btn.btn-info.btn-sm.pull-right.detail(href="/location/#{location._id}") Check details         
+        else
+          h3.text-center Sorry, but no result has been found!
+      #others-list.row.list-group
+        if locations.others
+          each location in locations.other
+            .col-xs-12.list-group-item.area
+              h4
+                a(href="/location/#{location._id}")= location.name
+                small &nbsp;
+                  +outputRating(location.rating)
+                span.badge.pull-right.badge-default= location.distance
+              p.address= location.address
+              p
+                each facility in location.facilities
+                  span.label.label-warning= facility
+                  | &nbsp;
+                a.btn.btn-info.btn-sm.pull-right.detail(href="/location/#{location._id}") Check details         
+        else
+          h3.text-center Sorry, but no result has been found!
 
     .col-xs-12.col-md-4
       include ./_includes/searchPanel
