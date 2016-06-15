@@ -4,6 +4,14 @@ body {
 	background-color: #f5f5f5;
 }
 
+nav a.navbar-brand {
+	font-size: 135%;
+}
+
+nav ul li a{
+	font-size: 85%;
+}
+
 .jumbotron {
 	color: white;
 	background-image: url("../images/jumbotron.jpg");
@@ -29,6 +37,6 @@ body {
 	margin-bottom: 25px;
 }
 
-#footer {
+footer#footer {
 	font-size: 90%;
 }
