@@ -1,59 +1,59 @@
 .panel.panel-info
-.panel-heading
-  h2.panel-title Search Filter
-.panel-body
-  .row
-    .col-xs-12
-      form.input-group.input-group-sm
-        input.form-control(type='text' name='searchContent' placeholder='Which location...' required)
-        span.input-group-btn
-          button.btn.btn-primary(type='submit') Search
-          button.btn.btn-default#searchMore(type='button')
-            span.glyphicon.glyphicon-menu-down  
-  .row#searchPanel
-    br
-    .col-xs-12
-      .panel.panel-default
-        .panel-body
-          p.text-center 
-            strong Advance Search
-          form.form-horizontal(action="#" method="get" role="form")
-            .form-group.form-group-sm
-              label.col-xs-2.control-label Name
-              .col-xs-10
-                input.form-control(type="text" name="name" placeholder="Location name...")
-            .form-group.form-group-sm
-              label.col-xs-2.control-label Rating
-              .col-xs-6
-                select.form-control(name="rating-dir")
-                  option(value='' disabled selected hidden) Which is...
-                  option(value='') Greater than
-                  option(value='') Greater than or equal to
-                  option(value='') Exactly equal to
-                  option(value='') Less than or equal to
-                  option(value='') Less than
-              .col-xs-4
-                select.form-control(name="rating")
-                  option(value='' disabled selected hidden) Rating...
-                  option(value='5') 5
-                  option(value='4') 4
-                  option(value='3') 3
-                  option(value='2') 2
-                  option(value='1') 1
-            .form-group.form-group-sm
-              label.col-xs-2.control-label Distance
-              .col-xs-10
-                select.form-control(name="maxdis")
-                  option(value='' disabled selected hidden) Choose maximum distance...
-                  option(value='100') 100m
-                  option(value='250') 250m
-                  option(value='500') 500m
-                  option(value='1000') 1000m
-                  option(value='2000') 2000m
-                  option(value='5000') 5000m
-            .form-group.form-group-sm
-              label.col-xs-2.control-label Type
-              .col-xs-10
-                input.form-control(type="text" name="type" placeholder="Location type...")
-            button.btn.btn-default.btn-sm.pull-left(type="reset") Clear All
-            button.btn.btn-primary.btn-sm.pull-right(type="submit") Find My places!
+  .panel-heading
+    h2.panel-title Search Filter
+  .panel-body
+    .row
+      .col-xs-12
+        form.input-group.input-group-sm
+          input.form-control(type='text' name='searchContent' placeholder='Which location...' required)
+          span.input-group-btn
+            button.btn.btn-primary(type='submit') Search
+            button.btn.btn-default#searchMore(type='button')
+              span.glyphicon.glyphicon-menu-down  
+    .row#searchPanel
+      br
+      .col-xs-12
+        .panel.panel-default
+          .panel-body
+            p.text-center 
+              strong Advance Search
+            form.form-horizontal(action="#" method="get" role="form")
+              .form-group.form-group-sm
+                label.col-xs-2.control-label Name
+                .col-xs-10
+                  input.form-control(type="text" name="name" placeholder="Location name...")
+              .form-group.form-group-sm
+                label.col-xs-2.control-label Rating
+                .col-xs-6
+                  select.form-control(name="rating-dir")
+                    option(value='' disabled selected hidden) Which is...
+                    option(value='') Greater than
+                    option(value='') Greater than or equal to
+                    option(value='') Exactly equal to
+                    option(value='') Less than or equal to
+                    option(value='') Less than
+                .col-xs-4
+                  select.form-control(name="rating")
+                    option(value='' disabled selected hidden) Rating...
+                    option(value='5') 5
+                    option(value='4') 4
+                    option(value='3') 3
+                    option(value='2') 2
+                    option(value='1') 1
+              .form-group.form-group-sm
+                label.col-xs-2.control-label Distance
+                .col-xs-10
+                  select.form-control(name="maxdis")
+                    option(value='' disabled selected hidden) Choose maximum distance...
+                    option(value='100') 100m
+                    option(value='250') 250m
+                    option(value='500') 500m
+                    option(value='1000') 1000m
+                    option(value='2000') 2000m
+                    option(value='5000') 5000m
+              .form-group.form-group-sm
+                label.col-xs-2.control-label Type
+                .col-xs-10
+                  input.form-control(type="text" name="type" placeholder="Location type...")
+              button.btn.btn-default.btn-sm.pull-left(type="reset") Clear All
+              button.btn.btn-primary.btn-sm.pull-right(type="submit") Find My places!
