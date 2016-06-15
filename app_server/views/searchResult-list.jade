@@ -1,0 +1,30 @@
+extends layout
+
+include _includes/sharedHTMLFunction.jade
+
+block content
+  .row
+    h3 Here are your search results:
+    small Find #{resultNum} results
+  hr
+  .row
+    .col-xs-12.col-md-8
+      .row.list-group
+        if locations
+          each location in locations
+            .col-xs-12.list-group-item.area
+              h4
+                a(href="/location/#{location._id}")= location.name
+                small &nbsp;
+                  +outputRating(location.rating)
+                p.label.label-success.pull-right=location.category
+              p.address= location.address
+              p
+                each facility in location.facilities
+                  span.label.label-warning= facility
+                  | &nbsp;
+                a.btn.btn-info.btn-sm.pull-right.detail(href="/location/#{location._id}") Check details          
+        else
+          h3.text-center Sorry, but no result has been found!
+    .col-xs-12.col-md-4
+      include ./_includes/searchPanel
