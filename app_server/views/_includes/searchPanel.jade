@@ -25,15 +25,15 @@
               .form-group.form-group-sm
                 label.col-xs-2.control-label Rating
                 .col-xs-6
-                  select.form-control(name="rating-dir")
+                  select.form-control(name="ratingDir")
                     option(value='' disabled selected hidden) Which is...
-                    option(value='') Greater than
-                    option(value='') Greater than or equal to
-                    option(value='') Exactly equal to
-                    option(value='') Less than or equal to
-                    option(value='') Less than
+                    option(value='gt') Greater than
+                    option(value='gte') Greater than or equal to
+                    option(value='equals') Exactly equal to
+                    option(value='lte') Less than or equal to
+                    option(value='lt') Less than
                 .col-xs-4
-                  select.form-control(name="rating")
+                  select.form-control(name="ratingVal")
                     option(value='' disabled selected hidden) Rating...
                     option(value='5') 5
                     option(value='4') 4
@@ -54,12 +54,12 @@
               .form-group.form-group-sm
                 label.col-xs-2.control-label Type
                 .col-xs-10
-                  select.form-control(name="type")
+                  select.form-control(name="category")
                     option(value='' disabled selected hidden) Choose type...
-                    option(value='Restaurant') Restaurant
-                    option(value='Bar&Cafe') Bar&Cafe
-                    option(value='Shopping') Shopping
-                    option(value='Service') Service
-                    option(value='Others') Others
+                    option(value='restaurant') Restaurant
+                    option(value='bar&cafe') Bar&Cafe
+                    option(value='shopping') Shopping
+                    option(value='service') Service
+                    option(value='others') Others
               button.btn.btn-default.btn-sm.pull-left(type="reset") Clear All
               button.btn.btn-primary.btn-sm.pull-right(type="submit") Find My places!

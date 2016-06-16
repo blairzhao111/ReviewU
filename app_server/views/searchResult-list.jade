@@ -4,8 +4,23 @@ include _includes/sharedHTMLFunction.jade
 
 block content
   .row
-    h3 Here are your search results:
-    small Find #{resultNum} results
+    h3 Here are your search results
+    div
+      small You are looking for places that: 
+      if criterion.name 
+        small Name is like 
+          strong #{criterion.name} &nbsp;
+      if criterion.rating
+        small Rating is 
+          strong #{criterion.rating} &nbsp;
+      if criterion.distance
+        small Within 
+          strong #{criterion.distance} &nbsp;
+      if criterion.category
+        small Category is 
+          strong #{criterion.category} &nbsp;
+    div
+      small Find #{resultNum} results for you
   hr
   .row
     .col-xs-12.col-md-8

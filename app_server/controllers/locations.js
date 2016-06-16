@@ -3,37 +3,12 @@ var request = require('request'),
     config = require('../config/config.js'),
     serverUrl = config.serverUrl;
 
-//process the distance data in locations
-var formatDistance = function(locations){
-  if(!locations || locations.length === 0){return;}
-  locations.forEach(function(location){
-    var distance, unit,
-        locationDistance = parseFloat(location.distance);
-    if(locationDistance<1000){
-      distance = parseInt(locationDistance, 10);
-      unit = 'm';
-    }else{
-      distance = (locationDistance/1000).toFixed(1);
-      unit = 'km';
-    }
-    location.distance = distance + unit;    
-  });
-  return locations;
-};
-
-//process the timestamp data in reviews to make it more readible.
-var formatTimestamp = function(reviews){
-  if(!reviews || reviews.length === 0){return;}
-  reviews.forEach(function(review){
-    var date = new Date(review.timestamp),
-        monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
-        day = date.getDate(),
-        month = monthNames[date.getMonth()],
-        year = date.getFullYear();
-    review.timestamp = month + ' ' + day + ' ' + year;
-  });
-  return reviews;
-};
+    //process the distance data in locations
+var formatDistance = util.formatDistance,
+    //format category, capitalize first character
+    formatCategory = util.formatCategory,
+    //process the timestamp data in reviews to make it more readible.
+    formatTimestamp = util.formatTimestamp;
 
 //get a location object from db through Restful API and execute the callback function.
 var getLocation = function(req, res, callback){
@@ -111,13 +86,14 @@ var categoryList = function(locations){
   return result;
 };
 
-//format category, capitalize first character
-var formatCategory = util.formatCategory;
-
 
 /**
 *  Render view function section
 **/
+
+//function for rendering any error page
+var renderErrorPage = util.renderErrorPage;
+
 //function for rendering homelist view
 var renderListPage = function(req, res, locations){
   var message;
@@ -172,9 +148,6 @@ var renderReviewFormPage = function(req, res, location){
     message: message
   }); 
 };
-
-//function for rendering any error page
-var renderErrorPage = util.renderErrorPage;
 
 
 /**

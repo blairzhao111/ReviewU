@@ -18,6 +18,12 @@ router.get('/locations/:locationid', ctrlLocation.findOneById);
 //read all instances of location by name
 router.get('/locations/name/:locationName', ctrlLocation.findByName);
 
+//read all instances of location by rating
+router.get('/locations/rating/:dir/:val', ctrlLocation.findByRating);
+
+//read all instances of location by category
+router.get('/locations/category/:locationCategory', ctrlLocation.findByCategory);
+
 //create a new instance of location
 router.post('/locations', ctrlLocation.createOne);
 

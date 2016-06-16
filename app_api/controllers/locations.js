@@ -106,12 +106,99 @@ exports.findByName = function(req, res){
 			.find({
 				name: new RegExp(data, 'i')
 			})
+			.limit(15)
 			.exec(function(err, locations){
 				if(err){
 					return sendJSONResponse(res, 404, err);
 				}
 				sendJSONResponse(res, 200, locations);
 			});
+	}else{
+		sendJSONResponse(res, 404, {
+			message: 'No locationName is specified in request!'
+		});
+	}
+};
+
+exports.findByRating = function(req, res){
+	var dir = req.params.dir,
+		val = req.params.val;
+
+	console.log(dir);
+	console.log(val);
+
+	if(val>5 || val < 1){
+		return sendJSONResponse(res, 404, {
+			message: 'Invalid value for rating value!'
+		});
+	}
+
+	var query = Location.find({});
+
+	switch(dir){
+		case 'gt':
+			query.where('rating').gt(val);
+			break;
+		case 'gte':
+			query.where('rating').gte(val);
+			break;
+		case 'equals':
+			query.where('rating').equals(val);
+			break;
+		case 'lte':
+			query.where('rating').lte(val);
+			break;
+		case 'lt':
+			query.where('rating').lt(val);
+			break;
+		default:
+			sendJSONResponse(res, 404, {
+				message: 'Invalid value for rating direction!'
+			});
+	}
+
+	query
+		.limit(15)
+		.exec(function(err, locations){
+			if(err){
+				console.log(err);
+				sendJSONResponse(res, 404, err);
+			}
+			sendJSONResponse(res, 200, locations);
+		});
+};
+
+exports.findByCategory = function(req, res){
+	if(req.params && req.params.locationCategory){
+		var data = req.params.locationCategory;
+		if(data === 'bar&cafe'){
+			Location
+				.find()
+				.or([{
+					category: 'bar'
+				}, {
+					category: 'cafe' 
+				}])
+				.limit(15)
+				.exec(function(err, locations){
+					if(err){
+						return sendJSONResponse(res, 404, err);
+					}
+					sendJSONResponse(res, 200, locations);
+				});
+		}else{
+			Location
+				.find({
+					category: data
+				})
+				.limit(15)
+				.exec(function(err, locations){
+					if(err){
+						return sendJSONResponse(res, 404, err);
+					}
+					sendJSONResponse(res, 200, locations);
+				});			
+		}
 	}else{
 		sendJSONResponse(res, 404, {
 			message: 'No locationName is specified in request!'
