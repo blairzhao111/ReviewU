@@ -309,8 +309,9 @@ exports.advanceSearch = function(req, res){
 			return renderSearchResultList(req, res, locations, criterion);
 		});
 	}else{
-		res.status(304);
-		return res.redirect(req.session.prevUrl)
+		res.send('invalid');
+/*		res.status(304);
+		return res.redirect(req.session.prevUrl)*/
 	}
 
 };

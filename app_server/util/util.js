@@ -53,3 +53,29 @@ exports.formatTimestamp = function(reviews){
   });
   return reviews;
 };
+
+exports.getSidebarByCategory = function(category){
+  var result;
+
+  switch(category){
+    case 'Restaurant':
+      result = "it's a restaurant that provides various food choices!";
+      break;
+    case 'Bar':
+      result = "it's a good choice for hanging out with your friends!";
+      break;
+    case 'Cafe':
+      result = "it's a nice place to just chill with cups of coffee!";
+      break;
+    case 'Shopping':
+      result = "it might sell somethings that you may want to buy! ";
+      break;
+    case 'Service':
+      result = "it provides you the service that you may need!";
+      break;
+    default:
+      result = "it will help you when you need it!";
+  }
+
+  return result
+};

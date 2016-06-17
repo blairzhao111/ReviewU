@@ -8,7 +8,9 @@ var formatDistance = util.formatDistance,
     //format category, capitalize first character
     formatCategory = util.formatCategory,
     //process the timestamp data in reviews to make it more readible.
-    formatTimestamp = util.formatTimestamp;
+    formatTimestamp = util.formatTimestamp,
+    //return a string sending as sidebar message and it's determinde by location's category.
+    getSidebarByCategory = util.getSidebarByCategory;
 
 //get a location object from db through Restful API and execute the callback function.
 var getLocation = function(req, res, callback){
@@ -108,7 +110,9 @@ var renderListPage = function(req, res, locations){
       title: 'ReviewU',
       strapline: 'Review every place near you and Share your experience with others!'
     },
-    sidebar: "Looking for wifi and a seat? Loc8r helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let Loc8r help you find the place you're looking for.",
+    sidebar: {
+      context: "Looking for places around you right now? Don't worry, ReviewU helps you find the best places near you. Perhaps a nice place to eat, wanna grab beers with friends or a shopping round? No problem, Let us help you find the place you're looking for."
+    },
     locations: locations,
     message: message || null
   });
@@ -120,8 +124,8 @@ var renderDetailPage = function(req, res, location){
     title: 'ReviewU - ' + location.name,
     pageHeader: {title: location.name},
     sidebar: {
-      context: 'is on Loc8r because it has accessible wifi and space to sit down with your laptop and get some work done.',
-      callToAction: 'If you\'ve been and you like it - or if you don\'t - please leave areview to help other people just like you.'
+      context: location.name + ' is on ReviewU because ' + getSidebarByCategory(location.category),
+      callToAction: 'If you\'ve been and you like it or even if you don\'t, please leave your precious review to help other people just like you.'
     },
     location: {
       _id: location._id,
