@@ -243,7 +243,9 @@ exports.searchByName = function(req, res){
 
 	//application level validation
 	if(!name){
-		return res.send('name is empty!');
+		//res.status(304);
+		return res.send('invalid');
+		//return res.redirect(req.session.prevUrl)
 	}
 
 	getLocationByName(req, res, name, function(req, res, locations){
@@ -261,6 +263,8 @@ exports.advanceSearch = function(req, res){
 		maxdis = req.query.maxdis,
 		category = req.query.category,
 		criterion = {};
+
+	req.session.prevUrl = req.url;
 
 	if(maxdis){
 		getLocationByDistance(req, res, maxdis, function(req, res, locations){
@@ -305,7 +309,8 @@ exports.advanceSearch = function(req, res){
 			return renderSearchResultList(req, res, locations, criterion);
 		});
 	}else{
-
+		res.status(304);
+		return res.redirect(req.session.prevUrl)
 	}
 
 };

@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 //require mongodb config and connection file.
 require('./app_api/models/db.js');
 
@@ -23,6 +24,11 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+	secret: 'A secret is a secret for sure',
+	resave: false,
+	saveUninitialized: true
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
