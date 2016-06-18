@@ -3,7 +3,7 @@ extends layout
 include _includes/sharedHTMLFunction.jade
 
 block content
-  button.close.pull-right(type="button")
+  button#closeJumbotron.close.pull-right(type="button")
     span &times 
   #banner.jumbotron
     .row
@@ -120,4 +120,5 @@ block content
 
     .col-xs-12.col-md-4
       include ./_includes/searchPanel
+      include ./_includes/addLocationPanel
       include ./_includes/sideMessagePanel

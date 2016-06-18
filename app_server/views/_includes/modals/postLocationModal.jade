@@ -1,0 +1,37 @@
+#postLocationModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="postModalLabel")
+  .modal-dialog(role="document")
+    form.modal-content.form-horizontal(action="", method="post", role="form")
+      .modal-header
+        button.close(type="button", data-dismiss="modal", aria-label="Close")
+          span(aria-hidden="true")&times;
+        h4#postModalLabel.modal-title.text-center Post A New Location
+      .modal-body
+        .form-group.form-group-sm
+          label.col-xs-2.control-label Name
+          .col-xs-10
+            input.form-control(type="text", name="name", placeholder="Location Name")
+        .form-group.form-group-sm
+          label.col-xs-2.control-label Address
+          .col-xs-10
+            input.form-control(type="text", name="address", placeholder="Location Address")
+        .form-group.form-group-sm
+          label.col-xs-1.control-label lng
+          .col-xs-5
+            input.form-control(type="text", name="lng", placeholder="Location lng")
+          label.col-xs-1.control-label lat
+          .col-xs-5
+            input.form-control(type="text", name="lat", placeholder="Location lat")             
+        .form-group.form-group-sm
+          label.col-xs-2.control-label Category
+          .col-xs-10
+            select.form-control(name="category")
+              option(value='' disabled selected hidden) Choose category...
+              option(value='restaurant') Restaurant
+              option(value='bar') Bar
+              option(value='cafe') Cafe
+              option(value='shopping') Shopping
+              option(value='service') Service
+              option(value='others') Others
+      .modal-footer
+        button.btn.btn-default.pull-left(type="button", data-dismiss="modal") Close
+        button.btn.btn-primary(type="submit") Submit

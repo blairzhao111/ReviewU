@@ -89,7 +89,7 @@
 	    }*/
 		
 		//button for closing up list-page's jumbotron 
-		$('button.close').on('click', function(){
+		$('button#closeJumbotron').on('click', function(){
 			$('#banner').slideUp(1000);
 			$(this).hide();
 		});

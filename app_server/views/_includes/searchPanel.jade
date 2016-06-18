@@ -5,7 +5,7 @@
     .row
       .col-xs-12
         form#search.input-group.input-group-sm(action="/search" method="get" role="form")
-          input.form-control(type='text' name='searchContent' placeholder='Which location...')
+          input.form-control(type='text',name='searchContent',placeholder='Which location...',required)
           span.input-group-btn
             button.btn.btn-primary(type='submit') Search
             button.btn.btn-default#searchMore(type='button')
