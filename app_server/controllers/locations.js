@@ -88,6 +88,10 @@ var categoryList = function(locations){
   return result;
 };
 
+//function for checking if location's information is valid
+var checkLocationInfo = function(info){
+  return true;
+};
 
 /**
 *  Render view function section
@@ -201,6 +205,33 @@ module.exports.review = function (req, res) {
   getLocation(req, res, function(req, res, location){
     renderReviewFormPage(req, res, location);
   });
+};
+
+/* Post a new location to server and database*/
+module.exports.addLocation = function(req, res){
+  var body = req.body,
+      locationInfo = {
+        name: body.name,
+        address: body.address,
+        lng: body.lng,
+        lat:body.lat,
+        category: body.category,
+        openingTimes: {
+          weekday: body["open-week"],
+          sat: body["open-sat"],
+          sun: body["open-sun"]
+        },
+        facilities: body.facilities.trim().split(',')    
+      };
+
+  if(checkLocationInfo(locationInfo)){
+    res.render('generic-text', {
+      title: "Success",
+      content: "Your post is under our review, once all information is checked, it will be posted to the website!\n\n Thank you for your sharing!"
+    });
+  }else{
+
+  }
 };
 
 /* Add review to a specific location and return back to that location's detail page*/

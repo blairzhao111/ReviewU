@@ -12,6 +12,7 @@ router.get('/', ctrlLocation.homelist);
 router.get('/location/:locationid', ctrlLocation.locationInfo);
 router.get('/location/:locationid/review/new', ctrlLocation.review);
 router.post('/location/:locationid/review/new', ctrlLocation.addReview);
+router.post('/location/new', ctrlLocation.addLocation);
 
 /* Others pages. */
 router.get('/about', ctrlOthers.about);

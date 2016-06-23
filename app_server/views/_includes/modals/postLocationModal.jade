@@ -1,6 +1,6 @@
 #postLocationModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="postModalLabel")
   .modal-dialog(role="document")
-    form.modal-content.form-horizontal(action="", method="post", role="form")
+    form.modal-content.form-horizontal(action="/location/new", method="post", role="form")
       .modal-header
         button.close(type="button", data-dismiss="modal", aria-label="Close")
           span(aria-hidden="true")&times;
@@ -15,12 +15,11 @@
           .col-xs-10
             input.form-control(type="text", name="address", placeholder="Location Address")
         .form-group.form-group-sm
-          label.col-xs-1.control-label lng
+          label.col-xs-2.control-label Coords
           .col-xs-5
-            input.form-control(type="text", name="lng", placeholder="Location lng")
-          label.col-xs-1.control-label lat
+            input.form-control(type="text", name="lat", placeholder="Latitude")
           .col-xs-5
-            input.form-control(type="text", name="lat", placeholder="Location lat")             
+            input.form-control(type="text", name="lng", placeholder="Longitude")             
         .form-group.form-group-sm
           label.col-xs-2.control-label Category
           .col-xs-10
@@ -32,6 +31,19 @@
               option(value='shopping') Shopping
               option(value='service') Service
               option(value='others') Others
+        .form-group.form-group-sm
+          label.col-xs-2.control-label Openning
+          .col-xs-3
+            input.form-control(type="text", name="open-week", placeholder="Weekdays")          
+          .col-xs-3
+            input.form-control(type="text", name="open-sat", placeholder="Saturday")   
+          .col-xs-3
+            input.form-control(type="text", name="open-sun", placeholder="Sunday")
+        .form-group.form-group-sm
+          label.col-xs-2.control-label Facilities
+          .col-xs-10
+            textarea.form-control(name="facilities", rows="3", placeholder="Enter facilities here, separate by comma.")
+
       .modal-footer
         button.btn.btn-default.pull-left(type="button", data-dismiss="modal") Close
         button.btn.btn-primary(type="submit") Submit
