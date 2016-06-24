@@ -1,6 +1,6 @@
 #postLocationModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="postModalLabel")
   .modal-dialog(role="document")
-    form.modal-content.form-horizontal(action="/location/new", method="post", role="form")
+    form#newLocationPost.modal-content.form-horizontal(action="/location/new", method="post", role="form")
       .modal-header
         button.close(type="button", data-dismiss="modal", aria-label="Close")
           span(aria-hidden="true")&times;
@@ -9,21 +9,21 @@
         .form-group.form-group-sm
           label.col-xs-2.control-label Name
           .col-xs-10
-            input.form-control(type="text", name="name", placeholder="Location Name")
+            input.form-control(type="text", name="name", placeholder="Location Name" required)
         .form-group.form-group-sm
           label.col-xs-2.control-label Address
           .col-xs-10
-            input.form-control(type="text", name="address", placeholder="Location Address")
+            input.form-control(type="text", name="address", placeholder="Location Address" required)
         .form-group.form-group-sm
           label.col-xs-2.control-label Coords
           .col-xs-5
-            input.form-control(type="text", name="lat", placeholder="Latitude")
+            input.form-control(type="text", name="lat", placeholder="Latitude", required)
           .col-xs-5
-            input.form-control(type="text", name="lng", placeholder="Longitude")             
+            input.form-control(type="text", name="lng", placeholder="Longitude", required)             
         .form-group.form-group-sm
           label.col-xs-2.control-label Category
           .col-xs-10
-            select.form-control(name="category")
+            select.form-control(name="category", required)
               option(value='' disabled selected hidden) Choose category...
               option(value='restaurant') Restaurant
               option(value='bar') Bar
@@ -34,11 +34,13 @@
         .form-group.form-group-sm
           label.col-xs-2.control-label Openning
           .col-xs-3
-            input.form-control(type="text", name="open-week", placeholder="Weekdays")          
+            input.form-control(type="text", name="open-week", placeholder="Weekdays" required)          
           .col-xs-3
-            input.form-control(type="text", name="open-sat", placeholder="Saturday")   
+            input.form-control(type="text", name="open-sat", placeholder="Saturday" required)   
           .col-xs-3
-            input.form-control(type="text", name="open-sun", placeholder="Sunday")
+            input.form-control(type="text", name="open-sun", placeholder="Sunday" required)
+          .col-xs-1
+            a.glyphicon.glyphicon-info-sign
         .form-group.form-group-sm
           label.col-xs-2.control-label Facilities
           .col-xs-10

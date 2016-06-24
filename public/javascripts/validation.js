@@ -3,7 +3,33 @@
 	$(document).ready(function(){
 
 		var $searchForm = $('form#search'),
-			$advSearchForm = $('form#advSearch');
+			$advSearchForm = $('form#advSearch'),
+			$newLocationForm = $('form#newLocationPost');
+
+		//helper functions
+		var invalidCoords = function(coords){
+			var lng = coords[0],
+				lat = coords[1];
+
+			lng = parseFloat(lng);
+			lat = parseFloat(lat);
+
+			if(lng<-180||lng>180||lat<-90||lat>90){
+				return true;
+			}
+
+			return false;
+		};
+
+		var checkLocationInfo = function(info){
+			if(!info.name||!info.address||!info.category||!info.coords[0]||!info.coords[1]||!info.openingTimes[0]||!info.openingTimes[1] || !info.openingTimes[2]){
+				return "Please fill in all fields and try again!";
+			}else if(invalidCoords(info.coords)){
+				return "Please enter valid coordinates and try again!";
+			}else{
+				return null;
+			}
+		};
 
 		//simple search form validation
 		$searchForm.on('submit', function(event){
@@ -70,5 +96,46 @@
 
 				return true;
 			});
+
+		//add new location form validation
+		$newLocationForm.on('submit', function(event){
+			var $this = $(this),
+				data = {
+					name: $this.find('input[name="name"]').val(),
+					address: $this.find('input[name="address"]').val(),
+					coords: [
+						$this.find('input[name="lng"]').val(),
+						$this.find('input[name="lat"]').val()
+						],
+					category: $this.find('select[name="category"]').val(),
+					openingTimes: [
+						$this.find('input[name="open-week"]').val(),
+						$this.find('input[name="open-sat"]').val(),
+						$this.find('input[name="open-sun"]').val()
+						],
+					facilities: $this.find('textarea').val().trim().split(',')
+				},
+				$alert = $this.find('div#postError'),
+				message = null;
+
+			if($alert.length > 0){$alert.hide();}
+
+			message = checkLocationInfo(data);
+			if(message){
+				event.preventDefault();
+				if($alert.length > 0){
+					$alert.text(message);
+					$alert.show();
+				}else{
+					$('<div id="postError" class="alert alert-danger" role="alert">'+message+'</div>')
+						.prependTo($this.find('div.modal-body'));						
+				}
+
+				return false;
+			}
+
+			return true;
+		});
+
 	});
 })(jQuery);
