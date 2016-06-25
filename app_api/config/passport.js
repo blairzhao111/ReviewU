@@ -17,7 +17,7 @@ passport.use(new localStrategy({
 				message: 'Invalid email'
 			});
 		}else{
-			if(User.validatePassword(password)){
+			if(user.validatePassword(password)){
 				return done(null, user);
 			}else{
 				return done(null, false, {
