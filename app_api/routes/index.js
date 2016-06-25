@@ -2,7 +2,8 @@ var express = require('express'),
 	router = express.Router(),
     //require controller modules
 	ctrlLocation = require('../controllers/locations.js'),
-	ctrlReview = require('../controllers/reviews.js');
+	ctrlReview = require('../controllers/reviews.js'),
+	ctrlAuth = require('../controllers/authentication.js');
 
 /**
 location api routing
@@ -52,5 +53,13 @@ router.put('/locations/:locationid/reviews/:reviewid', ctrlReview.updateOneById)
 //delete a single instance of review by locationid and reviewid
 router.delete('/locations/:locationid/reviews/:reviewid', ctrlReview.deleteOneById);
 
+/**
+authentication api routing
+**/
+//api for user login action
+router.post('/login', ctrlAuth.login);
+
+//api for user registration action
+router.post('/register', ctrlAuth.register);
 
 module.exports = router;

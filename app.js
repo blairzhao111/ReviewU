@@ -6,8 +6,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var passport = require('passport');
 //require mongodb config and connection file.
 require('./app_api/models/db.js');
+require('./app_api/config/passport.js');
 
 var routes = require('./app_server/routes/index.js');
 var routesApi = require('./app_api/routes/index.js');
@@ -31,7 +33,7 @@ app.use(session({
 	saveUninitialized: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(passport.initialize());
 
 //defining routing
 app.use('/', routes);

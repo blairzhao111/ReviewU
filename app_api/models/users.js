@@ -18,6 +18,7 @@ var userSchema = new Schema({
 	salt: String
 });
 
+//define user model's methods
 userSchema.methods.setPassword = function(password){
 	this.salt = crypto.randomBytes(16).toString('hex');
 	this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
@@ -41,5 +42,5 @@ userSchema.methods.generateJwt = function(){
 	}, process.env.JWT_SECRET);
 };
 
-//create location model and export it
+//create user model and export it
 module.exports = mongoose.model("User", userSchema);
