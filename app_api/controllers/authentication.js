@@ -5,7 +5,7 @@ var passport = require('passport'),
 
 var sendJSONResponse = util.sendJSONResponse;
 
-//controller for handling login
+//controller for handling login action
 exports.login = function(req, res){
 	var email = req.body.email,
 		ps = req.body.ps,
@@ -40,7 +40,7 @@ exports.login = function(req, res){
 	})(req, res);
 };
 
-//controller for handling registration
+//controller for handling registration action
 exports.register = function(req, res){
 	var email = req.body.email,
 		name = req.body.name,

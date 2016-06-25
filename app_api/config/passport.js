@@ -3,27 +3,30 @@ var passport = require('passport'),
 	mongoose = require('mongoose'),
 	User = require('../models/users.js');
 
-//set password local strategy
+//set passport local strategy
 passport.use(new localStrategy({
-	usernameField: 'email'
-}, function(username, password, done){
+	usernameField: 'email',
+	passwordField: 'ps'
+}, function(email, password, done){
 	User.findOne({
-		email: username
+		email: email
 	}, function(err, user){
 		if(err){
 			return done(err);
-		}else if(!user){
+		}
+
+		if(!user){
 			return done(null, false, {
 				message: 'Invalid email'
 			});
-		}else{
-			if(user.validatePassword(password)){
-				return done(null, user);
-			}else{
-				return done(null, false, {
-					message: 'Invalid password'
-				});
-			}
 		}
+
+		if(!user.validatePassword(password)){
+			return done(null, false, {
+				message: 'Invalid password'
+			});
+		}
+
+		return done(null, user);
 	});
 }));
