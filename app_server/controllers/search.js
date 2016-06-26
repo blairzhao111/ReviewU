@@ -4,7 +4,9 @@ var request = require('request'),
     serverUrl = config.serverUrl;
 
 var formatCategory = util.formatCategory,
-	formatDistance = util.formatDistance;
+	formatDistance = util.formatDistance,
+	cachePrevUrl = util.cachePrevUrl,
+	renderErrorPage = util.renderErrorPage;
 
 //issue http request to app's api for getting a list of locations identified by name.
 var getLocationByName = function(req, res, locationName, callback){
@@ -216,10 +218,6 @@ var formatRating = function(ratingDir, ratingVal){
 /**
 *	Functions for rendering pages
 **/
-
-//function for rendering any error page
-var renderErrorPage = util.renderErrorPage;
-
 //function for rendering the search result page
 var renderSearchResultList = function(req, res, locations, criterion){
 	if(locations.length>0){
@@ -227,6 +225,7 @@ var renderSearchResultList = function(req, res, locations, criterion){
 			location.category = formatCategory(location.category);
 		});
 	}
+	cachePrevUrl(req);
 	res.render('searchResult-list', {
 		user: req.session.account?req.session.account.user:null,
 		locations: locations.length?locations:null,

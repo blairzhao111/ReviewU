@@ -101,12 +101,15 @@ exports.login = function(req, res){
 		session.account.token = token;
 
 		jwt.verify(token, process.env.JWT_SECRET, function(err, decoded){
+			var redirectUrl;
+
 			if(err){
 				return renderErrorPage(req, res, 404);
 			}
 			session.account.user = decoded;
 			//redirect back and show error message
-			res.redirect('/');
+			redirectUrl = session.returnTo || '/';
+			res.redirect(redirectUrl);
 		});
 	});
 };
@@ -143,21 +146,29 @@ exports.register = function(req, res){
 		session.account.token = token;
 
 		jwt.verify(token, process.env.JWT_SECRET, function(err, decoded){
+			var redirectUrl;
+
 			if(err){
 				console.log(err);
 				return renderErrorPage(req, res, 404);
 			}
 
-			req.session.user = decoded;
+			session.account.user = decoded;
 			//redirect back
-			res.redirect('/');
+			redirectUrl = session.returnTo || '/';
+			res.redirect(redirectUrl);
 		});
 	});
 };
 
 exports.logout = function(req, res){
-	if(req.session.account){
-		req.session.account = null;
+	var session = req.session,
+		redirectUrl;
+
+	if(session.account){
+		session.account = null;
 	}
-	res.redirect('/');
+
+	redirectUrl = req.session.returnTo || '/';
+	res.redirect(redirectUrl);
 };

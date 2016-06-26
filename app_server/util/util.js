@@ -10,6 +10,7 @@ exports.renderErrorPage = function(req, res, statusCode){
   }
   res.status(statusCode);
   res.render('generic-text', {
+    user: req.session.account?req.session.account.user:null,
     title: title,
     content: content
   });
@@ -78,4 +79,9 @@ exports.getSidebarByCategory = function(category){
   }
 
   return result
+};
+
+exports.cachePrevUrl = function(req){
+  req.session.returnTo = req.url;
+  return;
 };

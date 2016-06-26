@@ -11,8 +11,10 @@ var formatDistance = util.formatDistance,
     formatTimestamp = util.formatTimestamp,
     //return a string sending as sidebar message and it's determinde by location's category.
     getSidebarByCategory = util.getSidebarByCategory,
+    //function for caching previous url in session object as returnTo property.
+    cachePrevUrl = util.cachePrevUrl,
     //function for rendering any error page
-     renderErrorPage = util.renderErrorPage;
+    renderErrorPage = util.renderErrorPage;
 
 //get a location object from db through Restful API and execute the callback function.
 var getLocation = function(req, res, callback){
@@ -106,6 +108,7 @@ var renderListPage = function(req, res, locations){
     locations = [];
   }
   locations = categoryList(locations);
+  cachePrevUrl(req);
   res.render('location-list', {
     user: req.session.account?req.session.account.user:null,
     title: 'ReviewU - Share your reviews with us and find others',
@@ -123,6 +126,7 @@ var renderListPage = function(req, res, locations){
 
 //function for rendering the location detail page
 var renderDetailPage = function(req, res, location){
+  cachePrevUrl(req);
   res.render('location-info', {
     user: req.session.account?req.session.account.user:null,
     title: 'ReviewU - ' + location.name,
@@ -149,6 +153,7 @@ var renderDetailPage = function(req, res, location){
 var renderReviewFormPage = function(req, res, location){
   var name = location.name,
       message = req.query.err?'Please fill in all required fields and try again!':null;
+  cachePrevUrl(req);
   res.render('location-review-form', {
     user: req.session.account?req.session.account.user:null,
     title: 'Review ' + name  + ' on ReviewU',

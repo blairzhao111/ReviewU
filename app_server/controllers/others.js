@@ -1,6 +1,9 @@
+var util = require('../util/util.js'),
+	cachePrevUrl = util.cachePrevUrl;
 
 /* Get About Page*/
 module.exports.about = function (req, res) {
+  cachePrevUrl(req);
   res.render('generic-text', { 
   	user: req.session.account?req.session.account.user:null,
   	title: 'About ReviewU',
