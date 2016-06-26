@@ -1,11 +1,10 @@
-
 var express = require('express'),
     router = express.Router(),
 	//load controller modules
     ctrlLocation = require('../controllers/locations.js'),
     ctrlOthers = require('../controllers/others.js'),
-    ctrlSearch = require('../controllers/search.js');
-
+    ctrlSearch = require('../controllers/search.js'),
+    ctrlAuth = require('../controllers/authentication.js');
 
 /* Locations pages. */
 router.get('/', ctrlLocation.homelist);
@@ -20,5 +19,10 @@ router.get('/about', ctrlOthers.about);
 /* Search router */
 router.get('/search', ctrlSearch.searchByName);
 router.get('/search/adv', ctrlSearch.advanceSearch);
+
+/* User router */
+router.post('/login', ctrlAuth.login);
+router.post('/register', ctrlAuth.register);
+router.get('/logout', ctrlAuth.logout);
 
 module.exports = router;

@@ -27,12 +27,34 @@ html(lang="en")
               li
                 a(href='/about') About
               if user
-                label.label-default username
+                li.dropdown
+                  a.dropdown-toggle(href="#", data-toggle="dropdown")
+                    span #{user.name}
+                    span &nbsp;
+                    span.caret
+                  ul.dropdown-menu
+                    li
+                      navbar-login
+                        row
+                          .col-xs-4
+                            p.text-center
+                              span.glyphicon.glyphicon-user.icon-size
+                          .col-xs-8
+                            p.text-left
+                              strong #{user.name}
+                            p.text-left.small #{user.email}
+                    li.divider.navbar-login.session.bg
+                    li.navbar-login-session-bg
+                      .navbar-login.navbar-login-session
+                        row
+                          col-lg-12
+                            p
+                              a.btn.btn-danger.btn-block(href="/logout") Logout
               else
                 li
-                  a(href='#') SignUp
+                  a(href='#registerModal' data-toggle="modal") SignUp
                 li
-                  a(href='#') LogIn
+                  a(href='#loginModal' data-toggle="modal") LogIn
       block content
       footer#footer.navbar.navbar-default.navbar-fixed-bottom(role='footer')
         .container
@@ -50,6 +72,8 @@ html(lang="en")
             .col-xs-12
               p.small.text-center &copy; Junwei Zhao 2016
 
+      include ./_includes/modals/loginModal
+      include ./_includes/modals/registerModal
     script(src='/javascripts/jquery-2.2.4.min.js')
     script(src='/bootstrap/js/bootstrap.min.js')
     script(src='/javascripts/reviewU.js')

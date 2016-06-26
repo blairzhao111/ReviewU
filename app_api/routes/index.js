@@ -1,5 +1,10 @@
 var express = require('express'),
 	router = express.Router(),
+	jwt = require('express-jwt'),
+	auth = jwt({
+		secret: process.env.JWT_SECRET,
+		userProperty: 'payload'
+	}),
     //require controller modules
 	ctrlLocation = require('../controllers/locations.js'),
 	ctrlReview = require('../controllers/reviews.js'),
@@ -26,13 +31,13 @@ router.get('/locations/rating/:dir/:val', ctrlLocation.findByRating);
 router.get('/locations/category/:locationCategory', ctrlLocation.findByCategory);
 
 //create a new instance of location
-router.post('/locations', ctrlLocation.createOne);
+router.post('/locations', auth, ctrlLocation.createOne);
 
 //update a single instance of location by id
-router.put('/locations/:locationid', ctrlLocation.updateOneById);
+router.put('/locations/:locationid', auth, ctrlLocation.updateOneById);
 
 //delete a single instance of location by id
-router.delete('/locations/:locationid', ctrlLocation.deleteOneById);
+router.delete('/locations/:locationid', auth, ctrlLocation.deleteOneById);
 
 //router.get('/locations/:locationid/addType', ctrlLocation.updateOneTypeBYId);
 
@@ -45,13 +50,13 @@ Basic url pattern: .../api/locations/:locationid/reviews(/:reviewid)
 router.get('/locations/:locationid/reviews/:reviewid', ctrlReview.findOneById);
 
 //create a new instance of review and attach it to main document when its location is valid
-router.post('/locations/:locationid/reviews', ctrlReview.createOne);
+router.post('/locations/:locationid/reviews', auth, ctrlReview.createOne);
 
 //update a single instance of review by locationid and reviewid
-router.put('/locations/:locationid/reviews/:reviewid', ctrlReview.updateOneById);
+router.put('/locations/:locationid/reviews/:reviewid', auth, ctrlReview.updateOneById);
 
 //delete a single instance of review by locationid and reviewid
-router.delete('/locations/:locationid/reviews/:reviewid', ctrlReview.deleteOneById);
+router.delete('/locations/:locationid/reviews/:reviewid', auth, ctrlReview.deleteOneById);
 
 /**
 authentication api routing

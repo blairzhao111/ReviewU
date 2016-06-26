@@ -7,6 +7,31 @@ var Location = require('../models/locations.js'),
 //get sendJSONResponse function from util module
 var sendJSONResponse = util.sendJSONResponse;
 
+//get email from jwt token and query db to find if user exists
+var getAuthor = function(req, res, callback){
+	if(req.payload&&req.payload.email){
+		User.findOne({
+			email: req.payload.email
+		}, function(err, user){
+			if(err){
+				console.log(err);
+				return sendJSONResponse(res, 404, err);
+			}else if(!user){
+				return sendJSONResponse(res, 404, {
+					message: "User not found!"
+				});
+			}
+
+			callback(req, res, user.name);
+		});
+	}else{
+		return sendJSONResponse(res, 404, {
+			message: "User not found!"
+		});
+	}
+};
+
+
 //update location's rating when a new review is added or an existing review is updated.
 var updateLocationRating = function(location){
 	var reviews = location.reviews,
@@ -24,11 +49,11 @@ var updateLocationRating = function(location){
 };
 
 //add a given review to db 
-var addReview = function(req, res, location){
+var addReview = function(req, res, location, author){
 	var reviews = location.reviews,
 		body = req.body;
 	reviews.unshift({
-		author: body.author,
+		author: author,
 		rating: body.rating,
 		reviewText: body.reviewText
 	});
@@ -95,27 +120,29 @@ exports.findOneById = function(req, res){
 
 //create a new review to a specific location by providing locationid and review data.
 exports.createOne = function(req, res){
-	var locationid = req.params.locationid;
+	getAuthor(req, res, function(req, res, username){
+		var locationid = req.params.locationid;
 
-	if(locationid){
-		Location
-			.findById(locationid)
-			.select('reviews')
-			.exec(function(err, result){
-				if(err){
-					return sendJSONResponse(res, 400, err);
-				}else if(!result){
-					return sendJSONResponse(res, 404, {
-						message: 'Required locationid not found!'
-					});
-				}
-				addReview(req, res, result);
+		if(locationid){
+			Location
+				.findById(locationid)
+				.select('reviews')
+				.exec(function(err, result){
+					if(err){
+						return sendJSONResponse(res, 400, err);
+					}else if(!result){
+						return sendJSONResponse(res, 404, {
+							message: 'Required locationid not found!'
+						});
+					}
+					addReview(req, res, result, username);
+				});
+		}else{
+			sendJSONResponse(res, 404, {
+				message: 'locationid is required!'
 			});
-	}else{
-		sendJSONResponse(res, 404, {
-			message: 'locationid is required!'
-		});
-	}
+		}
+	});
 };
 
 //update a review subdocument 

@@ -1,0 +1,19 @@
+#loginModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="loginModalLabel")
+  .modal-dialog(role="document")
+    form#login.modal-content.form-horizontal(action="/login", method="post", role="form")
+      .modal-header
+        button.close(type="button", data-dismiss="modal", aria-label="Close")
+          span(aria-hidden="true")&times;
+        h4#loginModalLabel.modal-title.text-center Log In
+      .modal-body
+        .form-group.form-group-sm
+          label.col-xs-2.control-label Email
+          .col-xs-10
+            input.form-control(type="email", name="email", placeholder="Email" required)
+        .form-group.form-group-sm
+          label.col-xs-2.control-label Password
+          .col-xs-10
+            input.form-control(type="password", name="ps", placeholder="Password" required)
+      .modal-footer
+        button.btn.btn-default.pull-left(type="button", data-dismiss="modal") Close
+        button.btn.btn-primary(type="submit") Submit

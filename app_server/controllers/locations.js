@@ -10,7 +10,9 @@ var formatDistance = util.formatDistance,
     //process the timestamp data in reviews to make it more readible.
     formatTimestamp = util.formatTimestamp,
     //return a string sending as sidebar message and it's determinde by location's category.
-    getSidebarByCategory = util.getSidebarByCategory;
+    getSidebarByCategory = util.getSidebarByCategory,
+    //function for rendering any error page
+     renderErrorPage = util.renderErrorPage;
 
 //get a location object from db through Restful API and execute the callback function.
 var getLocation = function(req, res, callback){
@@ -96,10 +98,6 @@ var checkLocationInfo = function(info){
 /**
 *  Render view function section
 **/
-
-//function for rendering any error page
-var renderErrorPage = util.renderErrorPage;
-
 //function for rendering homelist view
 var renderListPage = function(req, res, locations){
   var message;
@@ -108,7 +106,8 @@ var renderListPage = function(req, res, locations){
     locations = [];
   }
   locations = categoryList(locations);
-  res.render('location-list', { 
+  res.render('location-list', {
+    user: req.session.account?req.session.account.user:null,
     title: 'ReviewU - Share your reviews with us and find others',
     pageHeader: {
       title: 'ReviewU',
@@ -125,6 +124,7 @@ var renderListPage = function(req, res, locations){
 //function for rendering the location detail page
 var renderDetailPage = function(req, res, location){
   res.render('location-info', {
+    user: req.session.account?req.session.account.user:null,
     title: 'ReviewU - ' + location.name,
     pageHeader: {title: location.name},
     sidebar: {
@@ -150,6 +150,7 @@ var renderReviewFormPage = function(req, res, location){
   var name = location.name,
       message = req.query.err?'Please fill in all required fields and try again!':null;
   res.render('location-review-form', {
+    user: req.session.account?req.session.account.user:null,
     title: 'Review ' + name  + ' on ReviewU',
     pageHeader: { title: 'Review ' + name },
     locationid: location._id,

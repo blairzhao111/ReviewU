@@ -228,6 +228,7 @@ var renderSearchResultList = function(req, res, locations, criterion){
 		});
 	}
 	res.render('searchResult-list', {
+		user: req.session.account?req.session.account.user:null,
 		locations: locations.length?locations:null,
 		resultNum: locations.length,
 		criterion: criterion

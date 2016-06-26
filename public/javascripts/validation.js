@@ -4,7 +4,9 @@
 
 		var $searchForm = $('form#search'),
 			$advSearchForm = $('form#advSearch'),
-			$newLocationForm = $('form#newLocationPost');
+			$newLocationForm = $('form#newLocationPost'),
+			$loginForm = $('form#login'),
+			$registerForm = $('form#register');
 
 		//helper functions
 		var invalidCoords = function(coords){
@@ -31,6 +33,33 @@
 			}
 		};
 
+		var checkLoginInfo = function(email, ps){
+			var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+			if(!email || !ps){
+				return "Please fill in all fields and try again!";
+			}else if(!(email.toString().match(emailPattern))){
+				return "Invalid email, please check and try again!";
+			}else{
+				return null;
+			}
+		};
+
+		var checkRegisterInfo = function(email, name, ps, ps2){
+			var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+			if(!email || !name || !ps || !ps2){
+				return "Please fill in all fields and try again!";
+			}else if(!(email.toString().match(emailPattern))){
+				return "Invalid email, please check and try again!";
+			}else if(ps.toString() !== ps2.toString()){
+				return "Password and verify password are different, please check and try again!";
+			}else {
+				return null;
+			}		
+		};
+
+		//validation handlers
 		//simple search form validation
 		$searchForm.on('submit', function(event){
 			var $input = $searchForm.children('input'),
@@ -134,6 +163,58 @@
 				return false;
 			}
 
+			return true;
+		});
+
+		//login form validation
+		$loginForm.on('submit', function(event){
+			var $this = $(this),
+				email = $this.find('input[name="email"]').val(),
+				ps = $this.find('input[name="ps"]').val(),
+				$alert = $this.find('div#loginError'),
+				message = null;
+
+			if($alert.length > 0){$alert.hide();}
+
+			message = checkLoginInfo(email, ps);
+			if(message){
+				event.preventDefault();
+				if($alert.length > 0){
+					$alert.text(message);
+					$alert.show();
+				}else{
+					$('<div id="loginError" class="alert alert-danger" role="alert">'+message+'</div>')
+						.prependTo($this.find('div.modal-body'));						
+				}
+				return false;
+			}
+			return true;
+		});
+
+		//register form validation
+		$registerForm.on('submit', function(event){
+			var $this = $(this),
+				email = $this.find('input[name="email"]').val(),
+				name = $this.find('input[name="name"]').val(),
+				ps = $this.find('input[name="ps"]').val(),
+				ps2 = $this.find('input[name="ps2"]').val(),
+				$alert = $this.find('div#registerError'),
+				message = null;
+
+			if($alert.length > 0){$alert.hide();}
+
+			message = checkRegisterInfo(email, name, ps, ps2);
+			if(message){
+				event.preventDefault();
+				if($alert.length > 0){
+					$alert.text(message);
+					$alert.show();
+				}else{
+					$('<div id="registerError" class="alert alert-danger" role="alert">'+message+'</div>')
+						.prependTo($this.find('div.modal-body'));						
+				}
+				return false;
+			}
 			return true;
 		});
 

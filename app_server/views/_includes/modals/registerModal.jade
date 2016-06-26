@@ -1,0 +1,28 @@
+#registerModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="registerModalLabel")
+  .modal-dialog(role="document")
+    form#register.modal-content.form-horizontal(action="/register", method="post", role="form")
+      .modal-header
+        button.close(type="button", data-dismiss="modal", aria-label="Close")
+          span(aria-hidden="true")&times;
+        h4#registerModalLabel.modal-title.text-center Sign Up
+      .modal-body
+        .form-group.form-group-sm
+          label.col-xs-2.control-label Email
+          .col-xs-10
+            input.form-control(type="email", name="email", placeholder="Email" required)
+        .form-group.form-group-sm
+          label.col-xs-2.control-label Name
+          .col-xs-10
+            input.form-control(type="text", name="name", placeholder="Name" required)
+        .form-group.form-group-sm
+          label.col-xs-2.control-label Password
+          .col-xs-10
+            input.form-control(type="password", name="ps", placeholder="Password" required)
+        .form-group.form-group-sm
+          label.col-xs-2.control-label Password
+          .col-xs-10
+            input.form-control(type="password", name="ps2", placeholder="Verify Password" required)
+
+      .modal-footer
+        button.btn.btn-default.pull-left(type="button", data-dismiss="modal") Close
+        button.btn.btn-primary(type="submit") Submit

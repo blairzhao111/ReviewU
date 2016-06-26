@@ -40,3 +40,30 @@ nav ul li a{
 footer#footer {
 	font-size: 90%;
 }
+
+
+
+.navbar-login
+{
+    width: 275px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.navbar-login-session
+{
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+
+}
+
+.dropdown-menu {
+padding-top: 25px;
+overflow: hidden;
+}
+
+.icon-size
+{
+    font-size: 80px;
+}

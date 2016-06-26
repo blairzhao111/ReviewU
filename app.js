@@ -29,8 +29,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
 	secret: 'A secret is a secret for sure',
-	resave: false,
-	saveUninitialized: true
+	resave: true,
+	saveUninitialized: false
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
@@ -40,6 +40,7 @@ app.use(passport.session());
 app.use('/', routes);
 app.use('/api', routesApi);
 
+// error handlers
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -47,8 +48,15 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-
-// error handlers
+// Catch unauthorized errors
+app.use(function(err, req, res, next){
+  if(err.name==='UnauthorizedError'){
+    res.status(401);
+    res.json({
+      message: err.name + ':' + err.message
+    });
+  }
+});
 
 // development error handler
 // will print stacktrace
