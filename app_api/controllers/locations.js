@@ -1,5 +1,5 @@
 var DEFAULT_MAX_DISTANCE = 2, //unit is in kilometer, default is set to 2km/2000m
-	DEFAULT_RETURN_NUMBER = 10, 
+	DEFAULT_RETURN_NUMBER = 50, 
     //require Location model 
 	Location = require('../models/locations.js'),
 	util = require('../utils/util.js');
