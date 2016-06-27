@@ -7,6 +7,8 @@ html(lang="en")
     link(rel='icon', href='/images/favicon.ico')
     title= title
     link(rel='stylesheet', href='/bootstrap/css/journal.css')
+    link(rel='stylesheet', href='/bootstrap/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap-social.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
 
   body
@@ -60,20 +62,49 @@ html(lang="en")
     footer.container
       .row
         .col-xs-12.col-sm-6.col-md-4
-          h5 About
+          h5 Navgation
           .hline
+          ul.list-inline.list-group
+            li
+              a.list-group-item(href='/') Home
+            li
+              a.list-group-item(href='/about') About
+            li 
+              a.list-group-item(href='#') Search
+            li
+              a.list-group-item(href="#") #ReviewU
         .col-xs-12.col-sm-6.col-md-4
-          h5 Thing
+          h5 About Junwei
           .hline
+          h6 Fullstack Developer
+          h6 Email: blairzhao111@gmail.com, jzhao34@buffalo.edu
         .col-xs-12.col-sm-6.col-md-4
           h5 Contact
           .hline
+          row
+            .col-xs-5
+              button.btn.btn-primary.btn-block(data-toggle="modal", data-target="#messageMeModal") Message Me!
+            .col-xs-7
+              ul.list-inline
+                li
+                  a.btn.btn-sm.btn-social-icon.btn-twitter
+                    span.fa.fa-twitter
+                li
+                  a.btn.btn-sm.btn-social-icon.btn-github
+                    span.fa.fa-github
+                li
+                  a.btn.btn-sm.btn-social-icon.btn-linkedin
+                    span.fa.fa-linkedin
+                li
+                  a.btn.btn-sm.btn-social-icon.btn-reddit
+                    span.fa.fa-reddit                    
       .row
         .col-xs-12
-          p.small.text-center &copy; Junwei Zhao 2016
+          p.small.text-center Copyright &copy; Junwei Zhao 2016 All rights reserved
 
       include ./_includes/modals/loginModal
       include ./_includes/modals/registerModal
+      include ./_includes/modals/messageMeModal
     script(src='/javascripts/jquery-2.2.4.min.js')
     script(src='/bootstrap/js/bootstrap.min.js')
     script(src='/javascripts/reviewU.js')
