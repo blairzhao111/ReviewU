@@ -40,6 +40,14 @@ footer {
 	font-size: 90%;
 }
 
+.backToTop {
+	text-decoration: none;
+	position: fixed;
+	bottom: 12%;
+	right: 3%;
+	display: none;
+}
+
 .navbar-login
 {
     width: 275px;

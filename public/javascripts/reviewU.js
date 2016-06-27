@@ -7,7 +7,8 @@
 			$footer = $('#footer'),
 			$searchSpan = $searchMore.children('span'),
 			$list = $('div#list'),
-			borderDefault = $area.css('border');
+			borderDefault = $area.css('border'),
+			$backToTop = $('a.backToTop');
 
 		if($list.length > 0){
 			var $tab = $list.find('ul#tab'),
@@ -83,10 +84,6 @@
 		//pages starting state
 		$('p a.detail').hide();
 		$searchPanel.hide();
-
-/*		if ($("body").height() > $(window).height()) {
-	        $footer.hide();
-	    }*/
 		
 		//button for closing up list-page's jumbotron 
 		$('button#closeJumbotron').on('click', function(){
@@ -128,13 +125,19 @@
 				}
 			});
 
-/*		window.onscroll = function(ev) {
-		    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-		        $footer.fadeToggle(1500);
-		    }else{
-		    	$footer.hide();
-		    }
-		};*/
+		//back to top button
+		$backToTop.on('click', function(){
+			$('html, body').animate({scrollTop: 0}, 750);
+			return false;
+		});
+
+		$(window).scroll(function(){
+			if($(this).scrollTop() > 100){
+				$backToTop.fadeIn(500);
+			}else{
+				$backToTop.fadeOut(300);
+			}
+		});
 
 	});
 })(jQuery);
