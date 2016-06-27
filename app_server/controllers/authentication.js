@@ -12,6 +12,7 @@ var matchPasswords = function(ps1, ps2){
 	return ps1 === ps2;
 };
 
+//function that sending register request to login api and get result back.
 var doRegister = function(req, res, userData, callback){
 	var path = '/api/register',
 	    requestOptions = {
@@ -45,6 +46,7 @@ var doRegister = function(req, res, userData, callback){
     });
 };
 
+//function that sending login request to login api and get result back.
 var doLogin = function(req, res, userData, callback){
 	var path = '/api/login',
 	    requestOptions = {
@@ -54,7 +56,7 @@ var doLogin = function(req, res, userData, callback){
         };
 
     request(requestOptions, function(err, response, body){
-    	var statusCode, message;
+    	var statusCode;
     	if(err){
     		console.log(err);
     	}else{
@@ -64,8 +66,12 @@ var doLogin = function(req, res, userData, callback){
     			return callback(req, res, body.token);
     		}else{
     			if(statusCode === 400 || statusCode === 401){
-    				message = body.message;
-    				//redirect back and show error message
+    				//redirect back to previous page and show error message
+    				req.session.customError = {
+    					type: 'login',
+    					message: body.message.toString()
+    				};
+    				res.redirect(303, req.session.returnTo);
     			}else{
     				return renderErrorPage(req, res, statusCode);
     			}
@@ -87,6 +93,7 @@ var renderRegisterSuccessfulPage = function(req, res){
 };
 
 //export section
+//login controller
 exports.login = function(req, res){
 	var body = req.body,
 		email = body.email,
@@ -126,6 +133,7 @@ exports.login = function(req, res){
 	});
 };
 
+//register(signup) controller
 exports.register = function(req, res){
 	var body = req.body,
 		email = body.email,
@@ -173,6 +181,7 @@ exports.register = function(req, res){
 	});
 };
 
+//logout controller
 exports.logout = function(req, res){
 	var session = req.session,
 		redirectUrl;

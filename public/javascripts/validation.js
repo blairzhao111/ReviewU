@@ -6,7 +6,8 @@
 			$advSearchForm = $('form#advSearch'),
 			$newLocationForm = $('form#newLocationPost'),
 			$loginForm = $('form#login'),
-			$registerForm = $('form#register');
+			$registerForm = $('form#register'),
+			$messageForm = $('form#messageMe');
 
 		//helper functions
 		var invalidCoords = function(coords){
@@ -57,6 +58,18 @@
 			}else {
 				return null;
 			}		
+		};
+
+		var checkMessageInfo = function(name, email, text){
+			var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+			if(!name || !email || !text){
+				return "Please fill in all fields and try again!";
+			}else if(!email.match(emailPattern)){
+				return "Invalid email format, please check and try again!";
+			}else{
+				return null;
+			}
 		};
 
 		//validation handlers
@@ -216,6 +229,32 @@
 				return false;
 			}
 			return true;
+		});
+
+		//message form validation
+		$messageForm.on('submit', function(event){
+			var $this = $(this),
+				name = $this.find('input[name="name"]').val().toString(),
+				email = $this.find('input[name="email"]').val().toString(),
+				messageText = $this.find('textarea').val().toString(),
+				$alert = $this.find('div#messageMeError'),
+				message = null;
+
+			if($alert.length > 0){$alert.hide();}
+
+			message = checkMessageInfo(name, email, messageText);
+			if(message){
+				event.preventDefault();
+				if($alert.length>0){
+					$alert.text(message);
+					$alert.show();
+				}else{
+					$('<div id="messageMeError" class="alert alert-danger" role="alert">'+message+'</div>')
+						.prependTo($this.find('div.modal-body'));						
+				}
+				return false;
+			}
+			return true;	
 		});
 
 	});

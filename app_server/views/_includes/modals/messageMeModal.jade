@@ -17,7 +17,8 @@
         .form-group.form-group-sm
           label.col-xs-2.control-label Message
           .col-xs-10
-            textarea.form-control(rows="5", placeholder="Please leave your message here...")
+            textarea.form-control(rows="5", name="messageText", placeholder="Please leave your message here..." required)
       .modal-footer
-        button.btn.btn-default.pull-left(type="button", data-dismiss="modal") Close
-        button.btn.btn-primary(type="submit") Send
+        button.btn.btn-sm.btn-default.pull-left(type="button", data-dismiss="modal") Close
+        button.btn.btn-sm.btn-default(type="reset") Clear
+        button.btn.btn-sm.btn-primary(type="submit") Send
