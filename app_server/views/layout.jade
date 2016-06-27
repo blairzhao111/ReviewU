@@ -102,12 +102,14 @@ html(lang="en")
       .row
         .col-xs-12
           p.small.text-center Copyright &copy; Junwei Zhao 2016 All rights reserved
+          
+      include ./_includes/modals/loginModal
+      include ./_includes/modals/registerModal
+      include ./_includes/modals/messageMeModal
+
     a.backToTop(href="#")
       span.glyphicon.glyphicon-arrow-up Top
 
-    include ./_includes/modals/loginModal
-    include ./_includes/modals/registerModal
-    include ./_includes/modals/messageMeModal
     script(src='/javascripts/jquery-2.2.4.min.js')
     script(src='/bootstrap/js/bootstrap.min.js')
     script(src='/javascripts/reviewU.js')
