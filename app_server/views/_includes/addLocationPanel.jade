@@ -6,6 +6,9 @@
       .col-xs-12
         p Not found the place you've been, just share it with us!
         hr
-        button.btn.btn-primary.btn-block(type="button", data-toggle="modal" data-target="#postLocationModal") Post A New Place, Go!
+        if user
+          button.btn.btn-primary.btn-block(type="button", data-toggle="modal" data-target="#postLocationModal") Post A New Place, Go!
+        else
+          button.btn.btn-primary.btn-block(type="button" data-toggle="modal" data-target="#loginModal") Log In to add a new place!
 
 include ./modals/postLocationModal

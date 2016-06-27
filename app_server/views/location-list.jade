@@ -13,10 +13,10 @@ block content
           em &nbsp;#{pageHeader.strapline}
         if user
           p
-            a.btn.btn-primary.btn-lg(href="#") Add New Place!
+            a.btn.btn-primary.btn-lg(href="#postLocationModal" data-toggle="modal") Add New Place!
         else
           p
-            a.btn.btn-primary.btn-lg(href="#") Join Us Now!            
+            a.btn.btn-primary.btn-lg(href='#registerModal' data-toggle="modal") Join Us Now!            
   #list.row
     .col-xs-12.col-md-8
       ul#tab.nav.nav-tabs.nav-justified
