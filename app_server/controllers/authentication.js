@@ -74,6 +74,18 @@ var doLogin = function(req, res, userData, callback){
     });
 };
 
+var renderRegisterSuccessfulPage = function(req, res){
+	res.render('generic-text', {
+		user: req.session.account?req.session.account.user:null,
+		title: "Register Successful",
+		content: req.session.account.user.name + " , thank you for joining us! We hope you would enjoy using ReviewU.",
+		link: {
+			url: req.session.returnTo || '/',
+			text: 'Return to previous page...'
+		}
+	});
+};
+
 //export section
 exports.login = function(req, res){
 	var body = req.body,
@@ -154,9 +166,9 @@ exports.register = function(req, res){
 			}
 
 			session.account.user = decoded;
-			//redirect back
 			redirectUrl = session.returnTo || '/';
-			res.redirect(redirectUrl);
+
+			renderRegisterSuccessfulPage(req, res)
 		});
 	});
 };
