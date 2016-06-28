@@ -6,6 +6,8 @@
           span(aria-hidden="true")&times;
         h4#postModalLabel.modal-title.text-center Post A New Location
       .modal-body
+        if error
+          .alert.alert-danger(role="alert") #{error.message}
         .form-group.form-group-sm
           label.col-xs-2.control-label Name
           .col-xs-10

@@ -22,20 +22,27 @@ var doRegister = function(req, res, userData, callback){
         };
 
     request(requestOptions, function(err, response, body){
-    	var message;
+    	var redirectUrl;
     	if(err){
     		console.log(err);
     	}else{
     		body = JSON.parse(body);
+    		redirectUrl = req.session.returnTo || '/';
     		if(response.statusCode === 400){
-    			message = body.message;
     			//redirect back and show error message
-    			res.send('400');
+				req.session.error = {
+					type: 'register',
+					message: body.message.toString()
+				};
+				res.redirect(303, redirectUrl);	
     		}else if(response.statusCode === 404){
     			if(body.message){
-    				message = body.message;
     				//redirect back and show error message
-    				res.send('404');
+					req.session.error = {
+						type: 'register',
+						message: body.message.toString()
+					};
+					res.redirect(303, redirectUrl);	
     			}else{
     				return renderErrorPage(req, res, 404);
     			}
@@ -56,7 +63,7 @@ var doLogin = function(req, res, userData, callback){
         };
 
     request(requestOptions, function(err, response, body){
-    	var statusCode;
+    	var statusCode, redirectUrl;
     	if(err){
     		console.log(err);
     	}else{
@@ -67,11 +74,13 @@ var doLogin = function(req, res, userData, callback){
     		}else{
     			if(statusCode === 400 || statusCode === 401){
     				//redirect back to previous page and show error message
-    				req.session.customError = {
+    				req.session.error = {
     					type: 'login',
     					message: body.message.toString()
     				};
-    				res.redirect(303, req.session.returnTo);
+
+    				redirectUrl = req.session.returnTo || '/';
+    				res.redirect(redirectUrl);
     			}else{
     				return renderErrorPage(req, res, statusCode);
     			}
@@ -98,13 +107,24 @@ exports.login = function(req, res){
 	var body = req.body,
 		email = body.email,
 		ps = body.ps,
-		emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+		emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+		redirectUrl = req.session.returnTo || '/';
 
 	//application-level data validation
 	if(!email||!ps){
 		//redirect back and show error message
+		req.session.error = {
+			type: 'login',
+			message: "Please fill in all fields and try again!"
+		};
+		res.redirect(303, redirectUrl);		
 	}else if(!email.match(emailPattern)){
 		//redirect back and show error message
+		req.session.error = {
+			type: 'login',
+			message: "Invalid email, please check and try again!"
+		};
+		res.redirect(303, redirectUrl);	
 	}
 
 	doLogin(req, res, {
@@ -120,14 +140,12 @@ exports.login = function(req, res){
 		session.account.token = token;
 
 		jwt.verify(token, process.env.JWT_SECRET, function(err, decoded){
-			var redirectUrl;
-
 			if(err){
 				return renderErrorPage(req, res, 404);
 			}
+
 			session.account.user = decoded;
 			//redirect back and show error message
-			redirectUrl = session.returnTo || '/';
 			res.redirect(redirectUrl);
 		});
 	});
@@ -140,15 +158,28 @@ exports.register = function(req, res){
 		name = body.name,
 		ps = body.ps,
 		ps2 = body.ps2,
-		emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+		emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+		redirectUrl = req.session.returnTo || '/';
 
 	//application-level data validation
 	if(!email||!name||!ps||!ps2){
-		res.send("app level error");
+		req.session.error = {
+			type: 'register',
+			message: "Please fill in all fields and try again!"
+		};
+		res.redirect(303, redirectUrl);		
 	}else if(!email.match(emailPattern)){
-		res.send("app level error");
+		req.session.error = {
+			type: 'register',
+			message: "Invalid email, please check and try again!"
+		};
+		res.redirect(303, redirectUrl);		
 	}else if(!matchPasswords(ps, ps2)){
-		res.send("app level error");
+		req.session.error = {
+			type: 'register',
+			message: "password does not match verify password!"
+		};
+		res.redirect(303, redirectUrl);		
 	}
 
 	doRegister(req, res, {
@@ -166,7 +197,6 @@ exports.register = function(req, res){
 		session.account.token = token;
 
 		jwt.verify(token, process.env.JWT_SECRET, function(err, decoded){
-			var redirectUrl;
 
 			if(err){
 				console.log(err);
@@ -174,8 +204,6 @@ exports.register = function(req, res){
 			}
 
 			session.account.user = decoded;
-			redirectUrl = session.returnTo || '/';
-
 			renderRegisterSuccessfulPage(req, res)
 		});
 	});
