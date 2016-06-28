@@ -124,8 +124,7 @@
 
 				if($alert.length > 0){$alert.hide();}
 
-				if(!$this.find('input#name').val() || !$this.find('select#rating').val() 
-					|| !$this.find('textarea#reviewText').val()){
+				if(!$this.find('select#rating').val() || !$this.find('textarea#reviewText').val()){
 					event.preventDefault();
 					if($alert.length > 0){
 						$alert.show();
