@@ -1,4 +1,5 @@
 var Location = require('../models/locations.js'),
+	User = require('../models/users.js'),
 	util = require('./util.js');
 
 /**
@@ -13,6 +14,7 @@ var getAuthor = function(req, res, callback){
 		User.findOne({
 			email: req.payload.email
 		}, function(err, user){
+			console.log(user);
 			if(err){
 				console.log(err);
 				return sendJSONResponse(res, 404, err);
@@ -120,6 +122,7 @@ exports.findOneById = function(req, res){
 
 //create a new review to a specific location by providing locationid and review data.
 exports.createOne = function(req, res){
+	console.log("Pass AUTH");
 	getAuthor(req, res, function(req, res, username){
 		var locationid = req.params.locationid;
 

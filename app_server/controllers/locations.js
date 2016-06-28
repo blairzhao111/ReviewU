@@ -13,6 +13,8 @@ var formatDistance = util.formatDistance,
     getSidebarByCategory = util.getSidebarByCategory,
     //function for caching previous url in session object as returnTo property.
     cachePrevUrl = util.cachePrevUrl,
+    //function for getting JWT token
+    getToken = util.getToken,
     //function for rendering any error page
     renderErrorPage = util.renderErrorPage;
 
@@ -95,6 +97,16 @@ var categoryList = function(locations){
 //function for checking if location's information is valid
 var checkLocationInfo = function(info){
   return true;
+};
+
+var parser = function(body){
+  var data;
+  try{
+    data = JSON.parse(body);
+    return data;
+  }catch(err){
+    return body;
+  }
 };
 
 /**
@@ -246,7 +258,6 @@ module.exports.addReview = function(req, res){
         locationid = req.params.locationid,
         path = '/api/locations/' + locationid + '/reviews',
         postData = {
-          author: body.name,
           rating: body.rating,
           reviewText: body.review
         },
@@ -257,9 +268,15 @@ module.exports.addReview = function(req, res){
         };
 
     //do simple not undefined value in application level
-    if(!postData.author || !postData.rating || !postData.reviewText){
-      res.status(304);
+    if(!postData.rating || !postData.reviewText){
+      res.status(303);
       return res.redirect('/location/' + locationid + '/review/new?err=true');
+    }
+
+    if(req.session.account){
+      requestOptions.headers = {
+        'authorization': 'Bearer '+ getToken(req)
+      };
     }
 
     //make api call to review-createOne
@@ -267,13 +284,20 @@ module.exports.addReview = function(req, res){
       if(err){
         console.error(err);
       }else{
-        body = JSON.parse(body);
+        body = parser(body);
+
         if(response.statusCode === 201){
-          res.status(304);
+          res.status(303);
           res.redirect('/location/' + locationid);
         }else if(response.statusCode === 400 && body.name && body.name === "ValidationError"){
-          res.status(304);
+          res.status(303);
           res.redirect('/location/' + locationid + '/review/new?err=true');
+        }else if(response.statusCode === 401){
+          req.session.error = {
+            type: 'login',
+            message: "User error, please login and try again!"
+          };
+          res.redirect(303, "/");          
         }else{
           console.error(body);
           renderErrorPage(req, res, response.statusCode);

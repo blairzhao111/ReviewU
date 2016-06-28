@@ -81,7 +81,17 @@ exports.getSidebarByCategory = function(category){
   return result
 };
 
+//function for caching previous page's url into a returnTo property in session
 exports.cachePrevUrl = function(req){
   req.session.returnTo = req.url;
   return;
+};
+
+//function for getting token if user is valid or returning null.
+exports.getToken = function(req){
+  var account = req.session.account;
+  if(account){
+    return account.token;
+  }
+  return null;
 };

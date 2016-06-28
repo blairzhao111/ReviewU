@@ -5,7 +5,8 @@ var request = require('request'),
     serverUrl = config.serverUrl;
 
 //function for rendering any error page
-var renderErrorPage = util.renderErrorPage;
+var renderErrorPage = util.renderErrorPage,
+	getToken = util.getToken;
 
 //function for checting if two given passwords are the same.
 var matchPasswords = function(ps1, ps2){
