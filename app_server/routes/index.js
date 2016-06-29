@@ -1,3 +1,6 @@
+//******************
+// Dependencies
+//******************
 var express = require('express'),
     router = express.Router(),
 	//load controller modules
@@ -6,6 +9,10 @@ var express = require('express'),
     ctrlSearch = require('../controllers/search.js'),
     ctrlAuth = require('../controllers/authentication.js');
 
+//******************
+// Routing details
+//******************
+
 /* Locations pages. */
 router.get('/', ctrlLocation.homelist);
 router.get('/location/:locationid', ctrlLocation.locationInfo);
@@ -13,7 +20,7 @@ router.get('/location/:locationid/review/new', ctrlLocation.review);
 router.post('/location/:locationid/review/new', ctrlLocation.addReview);
 router.post('/location/new', ctrlLocation.addLocation);
 
-/* Others pages. */
+/* Others pages and other functionalities. */
 router.get('/about', ctrlOthers.about);
 router.post('/messageMe', ctrlOthers.messageMe);
 
