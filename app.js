@@ -1,23 +1,26 @@
 //************************
 //Application Dependency
 //************************
-require('dotenv').load(); //load environment variables
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var passport = require('passport');
+//load environment variables
+require('dotenv').load(); 
+//require dependencies
+var express = require('express'),
+    path = require('path'),
+    favicon = require('serve-favicon'),
+    logger = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    session = require('express-session'),
+    passport = require('passport');
 
 //*****************************
 //application setup and config
 //*****************************
-//require mongodb config and connection file for application
+//require mongodb config and connection file for the application 
 require('./app_api/models/db.js');
-//require passport config  for application
+//require passport config for the application
 require('./app_api/config/passport.js');
+//custom modules
 var routes = require('./app_server/routes/index.js'),
     routesApi = require('./app_api/routes/index.js'),
     util = require('./app_server/util/util.js');
@@ -25,7 +28,7 @@ var routes = require('./app_server/routes/index.js'),
 //create application
 var app = express();
 
-// view engine setup
+// view template engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'jade');
 
@@ -38,7 +41,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
-	secret: 'A secret is a secret for sure',
+	secret: process.env.COOKIE_SECRET,
 	resave: true,
 	saveUninitialized: false
 }));
@@ -55,9 +58,9 @@ app.use(function(req, res, next){
   next();
 });
 
-//**************
+//****************
 //defining routing
-//**************
+//****************
 app.use('/', routes);
 app.use('/api', routesApi);
 
@@ -97,4 +100,5 @@ app.use(function(err, req, res, next) {
   util.renderErrorPage(req, res, err.status || 500);
 });
 
+//export application
 module.exports = app;
