@@ -112,4 +112,6 @@ html(lang="en")
     script(src='/javascripts/reviewU.js')
     script(src='/javascripts/validation.js')
     if error
-      script(src='/javascripts/error/#{error.type}.js')
+      script(src='/javascripts/modals/#{error.type}.js')
+    if success
+      script(src='/javascripts/modals/#{success.type}.js')

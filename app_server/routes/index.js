@@ -15,6 +15,7 @@ router.post('/location/new', ctrlLocation.addLocation);
 
 /* Others pages. */
 router.get('/about', ctrlOthers.about);
+router.post('/messageMe', ctrlOthers.messageMe);
 
 /* Search router */
 router.get('/search', ctrlSearch.searchByName);

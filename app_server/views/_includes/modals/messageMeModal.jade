@@ -3,11 +3,13 @@
     form#messageMe.modal-content.form-horizontal(action="/messageMe", method="post", role="form")
       .modal-header
         button.close(type="button", data-dismiss="modal", aria-label="Close")
-          span(aria-hidden="true")&times;
+          span(aria-hidden="true") &times;
         h4#messageMeModalLabel.modal-title.text-center Please leave your message here
       .modal-body
         if error
           .alert.alert-danger(role="alert") #{error.message}
+        if success
+          .alert.alert-success(role="alert") #{success.message}
         .form-group.form-group-sm
           label.col-xs-2.control-label Name
           .col-xs-10
@@ -16,6 +18,10 @@
           label.col-xs-2.control-label Email
           .col-xs-10
             input.form-control(type="email", name="email", placeholder="Your Contact Email" required)
+        .form-group.form-group-sm
+          label.col-xs-2.control-label Subject
+          .col-xs-10
+            input.form-control(type="text", name="subject", placeholder="Message Subject" required)
         .form-group.form-group-sm
           label.col-xs-2.control-label Message
           .col-xs-10

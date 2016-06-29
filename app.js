@@ -46,10 +46,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 
-//custom middleware for custom error flash message handling
+//custom middleware for custom error/success flash message handling
 app.use(function(req, res, next){
   res.locals.error = req.session.error;
+  res.locals.success = req.session.success;
   delete req.session.error;
+  delete req.session.success;
   next();
 });
 
