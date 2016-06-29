@@ -131,6 +131,7 @@
 			return false;
 		});
 
+		//when page's scrollbar is at top, hide back to top button, otherwises show it.
 		$(window).scroll(function(){
 			if($(this).scrollTop() > 100){
 				$backToTop.fadeIn(500);

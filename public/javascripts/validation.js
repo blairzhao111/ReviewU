@@ -1,15 +1,16 @@
 
 (function($){
 	$(document).ready(function(){
-
+		//cache all forms in applications
 		var $searchForm = $('form#search'),
 			$advSearchForm = $('form#advSearch'),
 			$newLocationForm = $('form#newLocationPost'),
 			$loginForm = $('form#login'),
 			$registerForm = $('form#register'),
-			$messageForm = $('form#messageMe');
+			$messageForm = $('form#messageMe'),
+			$reviewForm = $('form#addReview');
 
-		//helper functions
+		//helper functions for form event handlers
 		var invalidCoords = function(coords){
 			var lng = coords[0],
 				lat = coords[1];
@@ -72,7 +73,7 @@
 			}
 		};
 
-		//validation handlers
+		//validation handlers for differernt forms
 		//simple search form validation
 		$searchForm.on('submit', function(event){
 			var $input = $searchForm.children('input'),
@@ -116,8 +117,7 @@
 		});
 
 		//review form validation
-		$('form#addReview')
-			.on('submit', function(event){
+		$reviewForm.on('submit', function(event){
 				//this refers to entire form element
 				var $this = $(this),
 					$alert = $this.find('div#reviewError');
@@ -235,6 +235,7 @@
 			var $this = $(this),
 				name = $this.find('input[name="name"]').val().toString(),
 				email = $this.find('input[name="email"]').val().toString(),
+				subject = $this.find('input[name="subject"]').val().toString(),
 				messageText = $this.find('textarea').val().toString(),
 				$alert = $this.find('div#messageMeError'),
 				message = null;

@@ -48,27 +48,23 @@ footer {
 	display: none;
 }
 
-.navbar-login
-{
+.navbar-login {
     width: 275px;
     padding: 10px;
     padding-bottom: 0px;
 }
 
-.navbar-login-session
-{
+.navbar-login-session{
     padding: 10px;
     padding-bottom: 0px;
     padding-top: 0px;
-
 }
 
 .dropdown-menu {
-padding-top: 25px;
-overflow: hidden;
+	padding-top: 25px;
+	overflow: hidden;
 }
 
-.icon-size
-{
-    font-size: 80px;
+.icon-size {
+	font-size: 80px;
 }
