@@ -2,6 +2,7 @@ doctype html
 html(lang="en")
   head
     meta(charset='utf-8')
+    meta(http-equiv='X-UX-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(name="author", content="Junwei Zhao")
     link(rel='icon', href='/images/favicon.ico')
@@ -11,6 +12,11 @@ html(lang="en")
     link(rel='stylesheet', href='/bootstrap/css/bootstrap-social.css')
     link(rel='stylesheet', href="http://fonts.googleapis.com/css?family=Lato")
     link(rel='stylesheet', href='/stylesheets/style.css')
+    <!--[if lt IE 9]>
+    script(src='/javascripts/dist/html5shiv.min.js')
+    script(src='/javascripts/dist/html5shiv-printshiv.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js')
+    <![endif]-->
 
   body
     nav.navbar.navbar-inverse.navbar-static-top(role='navigation')
