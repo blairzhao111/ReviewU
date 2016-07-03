@@ -10,7 +10,7 @@ html(lang="en")
     link(rel='stylesheet', href='/bootstrap/css/journal.css')
     link(rel='stylesheet', href='/bootstrap/css/font-awesome.min.css')
     link(rel='stylesheet', href='/bootstrap/css/bootstrap-social.css')
-    link(rel='stylesheet', href="http://fonts.googleapis.com/css?family=Lato")
+    link(rel='stylesheet', href="https://fonts.googleapis.com/css?family=Lato")
     link(rel='stylesheet', href='/stylesheets/style.css')
     <!--[if lt IE 9]>
     script(src='/javascripts/dist/html5shiv.min.js')
@@ -113,7 +113,9 @@ html(lang="en")
     include ./_includes/modals/messageMeModal
     a.backToTop(href="#")
       span.glyphicon.glyphicon-arrow-up Top
-    script(src='/javascripts/jquery-2.2.4.min.js')
+    script(src="https://code.jquery.com/jquery-2.2.4.min.js")
+    script(type="text/javascript").
+      window.jQuery || document.write('script(src="/javascripts/jquery-2.2.4.min.js")');
     script(src='/bootstrap/js/bootstrap.min.js')
     script(src='/javascripts/reviewU.js')
     script(src='/javascripts/validation.js')
