@@ -38,7 +38,26 @@ block content
                 each facility in location.facilities
                   span.label.label-warning= facility
                   | &nbsp;
-                a.btn.btn-info.btn-sm.pull-right.detail(href="/location/#{location._id}") Check details  
+                a.btn.btn-info.btn-sm.pull-right.detail(href="/location/#{location._id}") Check details 
+          .row.text-center
+            ul.pagination
+              if prev
+                li
+                  a(href="#") 
+                    span &laquo;
+              else
+                li.disabled
+                  a(href="#") 
+                    span &laquo;              
+              +outputPagination(1,3)
+              if next
+                li
+                  a(href="#") 
+                    span &raquo; 
+              else
+                li.disabled
+                  a(href="#") 
+                    span &raquo;              
         else
           h3.text-center Sorry, but no result has been found!
     .col-xs-12.col-md-4
