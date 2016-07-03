@@ -4,3 +4,14 @@ mixin outputRating(rating)
     span.glyphicon.glyphicon-star
   - for(i=rating+1;i<=5;i++)
     span.glyphicon.glyphicon-star-empty  
+
+mixin outputPagination(startPage, currentPage)
+  - for(var i=startPage;i<currentPage;i++)
+    li
+      a(href="#") #{i}
+  - for(i=currentPage;i<=currentPage;i++)
+    li.active
+      a(href="#") #{i}
+  - for(i=currentPage+1;i<=startPage+5;i++)
+    li
+      a(href="#") #{i}
