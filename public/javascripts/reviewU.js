@@ -6,22 +6,22 @@
 			$searchPanel = $('#searchPanel'),
 			$footer = $('#footer'),
 			$searchSpan = $searchMore.children('span'),
-			$list = $('div#list'),
+			$list = $('#list'),
 			borderDefault = $area.css('border'),
 			$backToTop = $('a.backToTop');
 
 		if($list.length > 0){
-			var $tab = $list.find('ul#tab'),
-				$restList = $list.find('div#restaurant-list'),
-				$barList = $list.find('div#barcafe-list').hide(),
-				$shopList = $list.find('div#shopping-list').hide(),
-				$serviceList = $list.find('div#service-list').hide(),
-				$othersList = $list.find('div#others-list').hide(),
-				$restTab = $tab.find('a#rest-tab'),
-				$barTab = $tab.find('a#bar-tab'),
-				$shopTab = $tab.find('a#shop-tab'),
-				$serviceTab = $tab.find('a#service-tab'),
-				$othersTab = $tab.find('a#others-tab'),
+			var $tab = $list.find('#tab'),
+				$restList = $list.find('#restaurant-list'),
+				$barList = $list.find('#barcafe-list').hide(),
+				$shopList = $list.find('#shopping-list').hide(),
+				$serviceList = $list.find('#service-list').hide(),
+				$othersList = $list.find('#others-list').hide(),
+				$restTab = $tab.find('#rest-tab'),
+				$barTab = $tab.find('#bar-tab'),
+				$shopTab = $tab.find('#shop-tab'),
+				$serviceTab = $tab.find('#service-tab'),
+				$othersTab = $tab.find('#others-tab'),
 				$currentTab = $restTab,
 				$currentList = $restList;
 
@@ -86,7 +86,7 @@
 		$searchPanel.hide();
 		
 		//button for closing up list-page's jumbotron 
-		$('button#closeJumbotron').on('click', function(){
+		$('#closeJumbotron').on('click', function(){
 			$('#banner').slideUp(1000);
 			$(this).hide();
 		});

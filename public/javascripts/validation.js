@@ -2,13 +2,13 @@
 (function($){
 	$(document).ready(function(){
 		//cache all forms in applications
-		var $searchForm = $('form#search'),
-			$advSearchForm = $('form#advSearch'),
-			$newLocationForm = $('form#newLocationPost'),
-			$loginForm = $('form#login'),
-			$registerForm = $('form#register'),
-			$messageForm = $('form#messageMe'),
-			$reviewForm = $('form#addReview');
+		var $searchForm = $('#search'),
+			$advSearchForm = $('#advSearch'),
+			$newLocationForm = $('#newLocationPost'),
+			$loginForm = $('#login'),
+			$registerForm = $('#register'),
+			$messageForm = $('#messageMe'),
+			$reviewForm = $('#addReview');
 
 		//helper functions for form event handlers
 		var invalidCoords = function(coords){
