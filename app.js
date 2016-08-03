@@ -100,5 +100,10 @@ app.use(function(err, req, res, next) {
   util.renderErrorPage(req, res, err.status || 500);
 });
 
+
+app.listen(process.env.PORT || 3000, function(){
+  console.log("Application starts running and listens at port:", process.env.PORT || 3000);
+});
+
 //export application
-module.exports = app;
+//module.exports = app;
